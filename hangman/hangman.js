@@ -19,6 +19,7 @@ function initUI() {
         ltrs[i].innerText = "";
         ltrs[i].style.display = "none";
     }
+    msgUI('Try to guess this ' + secretWord.length + ' letter word.')
 }
 
 function msgUI(txt) {
