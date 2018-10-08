@@ -1,0 +1,77 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Hangman</title>
+    <link rel="stylesheet" href="./hangman.css" />
+    <script src="./hangman.js"></script>
+</head>
+<body>
+    <div id="topDiv">
+        <button class="btn" id="startGame" onclick="hangman()">Start&nbsp;New&nbsp;Game</button>
+        <span class="text">&nbsp; Guesses Remaining: &nbsp;</span><span class="text" id="guessesRemaining">0</span>
+    </div>
+    <div id="wordDiv">
+        <table><tr>
+            <td>
+                <label id="labelWord" class="text">The&nbsp;Word:</label>
+            </td>
+            <td>
+                <div id="wordDisplay">
+                    <div class="text letter word">A</div>
+                    <div class="text letter word">B</div>
+                    <div class="text letter word">C</div>
+                    <div class="text letter word">D</div>
+                    <div class="text letter word">E</div>
+                    <div class="text letter word">F</div>
+                    <div class="text letter word">G</div>
+                    <div class="text letter word">H</div>
+                    <div class="text letter word">I</div>
+                    <div class="text letter word">J</div>
+                    <div class="text letter word">K</div>
+                    <div class="text letter word">L</div>
+                    <div class="text letter word">M</div>
+                    <div class="text letter word">N</div>
+                </div>
+            </td>
+        </tr></table>
+        <div id="qwerty">
+            <div id="msgDiv" class="msg">
+                <label id="msg"></label>
+            </div>
+            <div id="qwerty1">
+                <button class="btnLetter" onclick="onUI(this)">Q</button>
+                <button class="btnLetter" onclick="onUI(this)">W</button>
+                <button class="btnLetter" onclick="onUI(this)">E</button>
+                <button class="btnLetter" onclick="onUI(this)">R</button>
+                <button class="btnLetter" onclick="onUI(this)">T</button>
+                <button class="btnLetter" onclick="onUI(this)">Y</button>
+                <button class="btnLetter" onclick="onUI(this)">U</button>
+                <button class="btnLetter" onclick="onUI(this)">I</button>
+                <button class="btnLetter" onclick="onUI(this)">O</button>
+                <button class="btnLetter" onclick="onUI(this)">P</button>
+            </div>
+            <div id="qwerty2">
+                    <button class="btnLetter" onclick="onUI(this)">A</button>
+                    <button class="btnLetter" onclick="onUI(this)">S</button>
+                    <button class="btnLetter" onclick="onUI(this)">D</button>
+                    <button class="btnLetter" onclick="onUI(this)">F</button>
+                    <button class="btnLetter" onclick="onUI(this)">G</button>
+                    <button class="btnLetter" onclick="onUI(this)">H</button>
+                    <button class="btnLetter" onclick="onUI(this)">J</button>
+                    <button class="btnLetter" onclick="onUI(this)">K</button>
+                    <button class="btnLetter" onclick="onUI(this)">L</button>
+            </div>
+            <div id="qwerty3">
+                    <button class="btnLetter" onclick="onUI(this)">Z</button>
+                    <button class="btnLetter" onclick="onUI(this)">X</button>
+                    <button class="btnLetter" onclick="onUI(this)">C</button>
+                    <button class="btnLetter" onclick="onUI(this)">V</button>
+                    <button class="btnLetter" onclick="onUI(this)">B</button>
+                    <button class="btnLetter" onclick="onUI(this)">N</button>
+                    <button class="btnLetter" onclick="onUI(this)">M</button>
+            </div>
+        </div>
+    </div>
+</body>
+</html>

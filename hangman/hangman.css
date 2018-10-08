@@ -1,0 +1,55 @@
+.text {
+    height: 40px;
+    width: 40px;
+    padding: 4px;
+    font-size: 30px;
+}
+.letter {
+    float: left;
+    border: 2px;
+    border-color: black;
+    margin: 4px;
+    text-align: center;
+    font-family: 'Courier New', Courier, monospace;
+}
+.word {
+    background-color: beige;
+    display: none;
+}
+.msg {
+    height: 40px;
+    width: 510px;
+    padding: 4px;
+    font-size: 30px;
+    background-color: coral;
+    margin-bottom: 20px;
+    text-align: center;
+}
+.noFloat {
+    float: none !important;
+}
+.btn {
+    padding: 4px;
+    font-size: 30px;
+}
+.btnLetter {
+    height: 40px;
+    width: 40px;
+    padding: 4px;
+    font-size: 30px;
+    font-family: 'Courier New', Courier, monospace;
+    margin: 4px;
+}
+#wordDiv {
+    margin-top: 20px;
+}
+#qwerty {
+    margin-top: 40px;
+    margin-left: 120px;
+}
+#qwerty2 {
+    margin-left: 20px;
+}
+#qwerty3 {
+    margin-left: 60px;
+}
