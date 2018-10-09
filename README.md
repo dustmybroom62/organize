@@ -1,2 +1,2 @@
-# organize
-Project to help us organize
+# web
+Project for web stuff
