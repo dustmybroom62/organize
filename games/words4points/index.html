@@ -3,14 +3,49 @@
 <head>
     <meta charset="UTF-8">
     <title>Hangman</title>
-    <link rel="stylesheet" href="./hangman.css" />
+    <!--<link rel="stylesheet" href="./hangman.css" />-->
     <script src="../resources/words.js"></script>
     <script>
-        var x = {1: [1, 2, 3], 2: [4, 5, 6]};
-        alert(x[1]);
+        //var x = {1: [1, 2], 2: [2, 3]};
+        //alert(x[0]);
+
+        //for (p in x)
+        //    alert(p);
+
+        function loadWords(){
+            console.log("Loading word list from file...");
+            var wordList = words.split(' ');
+            console.log(wordList.length + " words loaded.");
+            var result = {low: 1, high: 0, lists: {}};
+            for (var i = 0; i < wordList.length; i++) {
+                w = wordList[i];
+                n = w.length;
+                if (n > result.high) {
+                    result.high = n;
+                }
+                list = result.lists[n];
+                if (!list) {
+                    result.lists[n] = [];
+                    list = result.lists[n];
+                }
+                list.push(w);
+            }
+            return result;
+        }
+
+        var words = loadWords();
+        var n = words.high - 3;
+        list =  words.lists[n];
+        w = Math.trunc(Math.random() * list.length);
+        alert(n + '  ' + list[w] + '  ' + w + '/' + list.length);
+
+
+
     </script>
 </head>
 <body>
+<h1>Still Under Construction - Check Back Later</h1>
+<!--
     <div id="topDiv">
         <button class="btn" id="startGame" onclick="hangman()">Start&nbsp;New&nbsp;Game</button>
         <span class="text">&nbsp; Guesses Remaining: &nbsp;</span><span class="text" id="guessesRemaining">0</span>
@@ -77,5 +112,6 @@
             </div>
         </div>
     </div>
+-->
 </body>
 </html>
