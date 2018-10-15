@@ -1,3 +1,4 @@
+// #region game UI
 function updateUI() {
     gr = document.querySelector('#guessesRemaining');
     gr.innerText = guessesLeft;
@@ -26,6 +27,70 @@ function msgUI(txt) {
     document.querySelector('#msg').innerText = txt;
 }
 
+function onUI(btn) {
+    if (!gameOver)
+        btn.disabled = true;
+    processGuess(btn.innerText);
+}
+// #endregion game UI
+
+// #region settings UI
+function settingsError(msg) {
+    alert(msg);
+    return false;
+}
+function saveSettings() {
+    var ng = document.all.numGuesses.value;
+
+    if (!ng || 0 > ng || 9 < ng) {
+        return settingsError("Missed Guesses Allowed must be between 1 and 9");
+    }
+    lenChks = document.querySelectorAll('#wordLengthsUL li input');
+    lens = settings.wordLensSelected.slice(0);
+    lenChecked = false;
+    for (var i = 0; i < lenChks.length; i++) {
+        lenChecked |= (lens[i] = lenChks[i].checked);
+    }
+    if (!lenChecked) return settingsError("Please select at least one word length.")
+
+    settings.numGuesses = ng;
+    settings.wordLensSelected = lens;
+    return true;
+}
+function loadSettings() {
+    document.all.numGuesses.value = settings.numGuesses;
+    ul = document.all.wordLengthsUL;
+    for (var i = ul.children.length; i > 0 ; i--) {
+        ul.children[i - 1].remove();
+    }
+    for (var i = 0; i < settings.wordLengths.length; i++) {
+        val = settings.wordLengths[i];
+        selected = settings.wordLensSelected[i];
+        li = document.createElement('li');
+        chk = document.createElement('input');
+        chk.type = 'checkbox';
+        chk.name = 'wordlen';
+        chk.value = val;
+        chk.checked = selected;
+        li.appendChild(chk);
+        sp = document.createElement('span');
+        sp.innerText = val;
+        li.appendChild(sp);
+        ul.appendChild(li);
+    }
+}
+function openSettings() {
+    loadSettings();
+    document.all.modal.style.display = 'block';
+    document.all.settings.style.display = 'block';
+}
+function closeSettings(save) {
+    if (save) {if (!saveSettings()) return false;}
+    document.all.modal.style.display = 'none';
+    document.all.settings.style.display = 'none';
+}
+// #endregion settings UI
+
 function showWinner() {
     msgUI('You Win :)');
 }
@@ -38,12 +103,6 @@ function goodGuess(guess) {
 
 function badGuess(guess) {
     msgUI('Sorry, ' + guess + ' is not in the word.')
-}
-
-function onUI(btn) {
-    //if (!gameOver)
-        btn.disabled = true;
-    processGuess(btn.innerText);
 }
 
 function loadWords(){
@@ -113,6 +172,7 @@ var guessesLeft = 0;
 var lettersGuessed = [];
 var gameOver = true;
 var secretWord = null;
+var wordList = null;
 
 function processGuess(guess) {
     /*
@@ -141,6 +201,17 @@ function processGuess(guess) {
     updateUI();
 }
 
+function chooseWordList() {
+    lens = [];
+    for (var i = 0; i < settings.wordLensSelected.length; i++) {
+        if (settings.wordLensSelected[i]) {
+            lens.push(settings.wordLengths[i]);
+        }
+    }
+    n = Math.trunc(Math.random() * lens.length);
+    return wordLists[lens[n]];
+}
+
 function hangman() {
    /*
     Starts up an interactive game of Hangman.
@@ -160,10 +231,40 @@ function hangman() {
     Follows the other limitations detailed in the problem write-up.
     */
    lettersGuessed = [];
-   guessesLeft = 8;
+   guessesLeft = settings.numGuesses;
    gameOver = false;
+   wordList = chooseWordList();
    secretWord = chooseWord();
    initUI();
    updateUI();
 }
-var wordList = loadWords();
+
+function coallateWordLists(wordList) {
+    var result = {};
+    for (var i = 0; i < wordList.length; i++) {
+        w = wordList[i];
+        n = w.length;
+        list = result[n];
+        if (!list) {
+            result[n] = [];
+            list = result[n];
+        }
+        list.push(w);
+    }
+    return result;
+}
+
+function initSettings(wordLists) {
+    keys = Object.keys(wordLists);
+    for (var i = 0; i < keys.length; i++) {
+        if (10 > wordLists[keys[i]].length) continue;
+        settings.wordLengths.push(keys[i]);
+        settings.wordLensSelected.push(1);
+    }
+}
+var settings = {numGuesses: 8, wordLengths: [], wordLensSelected: []}
+
+var allWords = loadWords();
+var wordLists = coallateWordLists(allWords);
+initSettings(wordLists);
+

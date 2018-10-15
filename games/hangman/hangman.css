@@ -53,3 +53,51 @@
 #qwerty3 {
     margin-left: 60px;
 }
+.modalBackground {
+    height: 100%;
+    width: 100%;
+    top: 0px;
+    left: 0px;
+    display: none;
+    position: absolute;
+    z-index: 1;
+    background-color: gray;
+    opacity: 0.6;
+}
+.modal {
+    height: 284px;
+    width: 360px;
+    top: 10px;
+    left: 10px;
+    background-color: wheat;
+    display: none;
+    position: absolute;
+    z-index: 2;
+    opacity: 1;
+    font-family: 'Courier New', Courier, monospace;
+    font-size: 18px;
+    padding: 6px;
+}
+.modalTitle {
+    background-color: coral;
+    font-weight: bold;
+    font-size: 18px;
+    padding: 8px;
+    margin-bottom: 10px;
+}
+.modalSection {
+    margin-top: 10px;
+}
+.modalBtns {
+    float: right;
+}
+.listbox {
+    background-color: white;
+    height: 150px;
+    overflow-y: scroll;
+}
+.listbox ul {
+    list-style-type: none;
+    margin: 0;
+    padding: 0;
+}

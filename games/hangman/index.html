@@ -6,9 +6,87 @@
     <link rel="stylesheet" href="./hangman.css" />
     <script src="../resources/words.js"></script>
     <script src="./hangman.js"></script>
+    <script>
+        function settingsError(msg) {
+            alert(msg);
+            return false;
+        }
+        function saveSettings() {
+            var ng = document.all.numGuesses.value;
+
+            if (!ng || 0 > ng || 9 < ng) {
+                return settingsError("Missed Guesses Allowed must be between 1 and 9");
+            }
+            lenChks = document.querySelectorAll('#wordLengthsUL li input');
+            lens = settings.wordLensSelected.slice(0);
+            lenChecked = false;
+            for (var i = 0; i < lenChks.length; i++) {
+                lenChecked |= (lens[i] = lenChks[i].checked);
+            }
+            if (!lenChecked) return settingsError("Please select at least one word length.")
+
+            settings.numGuesses = ng;
+            settings.wordLensSelected = lens;
+            return true;
+        }
+        function loadSettings() {
+            document.all.numGuesses.value = settings.numGuesses;
+            ul = document.all.wordLengthsUL;
+            for (var i = ul.children.length; i > 0 ; i--) {
+                ul.children[i - 1].remove();
+            }
+            for (var i = 0; i < settings.wordLengths.length; i++) {
+                val = settings.wordLengths[i];
+                selected = settings.wordLensSelected[i];
+                li = document.createElement('li');
+                chk = document.createElement('input');
+                chk.type = 'checkbox';
+                chk.name = 'wordlen';
+                chk.value = val;
+                chk.checked = selected;
+                li.appendChild(chk);
+                sp = document.createElement('span');
+                sp.innerText = val;
+                li.appendChild(sp);
+                ul.appendChild(li);
+            }
+        }
+        function openSettings() {
+            loadSettings();
+            document.all.modal.style.display = 'block';
+            document.all.settings.style.display = 'block';
+        }
+        function closeSettings(save) {
+            if (save) {if (!saveSettings()) return false;}
+            document.all.modal.style.display = 'none';
+            document.all.settings.style.display = 'none';
+        }
+    </script>
 </head>
 <body>
+    <div id="modal" class="modalBackground" onclick="closeSettings()">
+    </div>
+    <div id="settings" class="modal">
+        <div class="modalTitle">Settings</div>
+            <div class="modalSection">
+                <label>Missed Guesses Allowed:&nbsp;</label>
+                <input id="numGuesses" type="number" minlength="1" maxlength="1" min="1" max="9" />
+            </div>
+            <div class="modalSection">
+                <label>Word Lengths Allowed:</label>
+                <div class="listbox">
+                    <ul id="wordLengthsUL">
+                        <!-- <li><input type="checkbox" name="wordlen" value="1" />1</li> -->
+                    </ul>
+                </div>
+            </div>
+            <div class="modalSection modalBtns">
+                <button onclick="closeSettings(true)">Save</button>
+                <button onclick="closeSettings()">Cancel</button>
+            </div>
+        </div>
     <div id="topDiv">
+        <span class="text">&nbsp;&nbsp;<a href="javascript:openSettings()" title="Settings">...</a>&nbsp;&nbsp;&nbsp;&nbsp;</span>
         <button class="btn" id="startGame" onclick="hangman()">Start&nbsp;New&nbsp;Game</button>
         <span class="text">&nbsp; Guesses Remaining: &nbsp;</span><span class="text" id="guessesRemaining">0</span>
     </div>
