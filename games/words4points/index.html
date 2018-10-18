@@ -2,9 +2,10 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <title>Hangman</title>
-    <!--<link rel="stylesheet" href="./hangman.css" />-->
+    <title>Words 4 Points</title>
+    <link rel="stylesheet" href="./words4points.css" />
     <script src="../resources/words.js"></script>
+    <script src="./words4points.js"></script>
     <script>
         //var x = {1: [1, 2], 2: [2, 3]};
         //alert(x[0]);
@@ -33,85 +34,82 @@
             return result;
         }
 
-        var words = loadWords();
-        var n = words.high - 3;
-        list =  words.lists[n];
-        w = Math.trunc(Math.random() * list.length);
-        alert(n + '  ' + list[w] + '  ' + w + '/' + list.length);
+        // var words = loadWords();
+        // var n = words.high - 3;
+        // list =  words.lists[n];
+        // w = Math.trunc(Math.random() * list.length);
+        // alert(n + '  ' + list[w] + '  ' + w + '/' + list.length);
 
 
 
     </script>
 </head>
 <body>
-<h1>Still Under Construction - Check Back Later</h1>
-<!--
     <div id="topDiv">
-        <button class="btn" id="startGame" onclick="hangman()">Start&nbsp;New&nbsp;Game</button>
-        <span class="text">&nbsp; Guesses Remaining: &nbsp;</span><span class="text" id="guessesRemaining">0</span>
+        <button class="btn" id="btnStart" onclick="startGame()">New&nbsp;Game</button>&nbsp;
+        <button class="btn" id="btnReplay" onclick="replayHand()" disabled="true">Replay</button>
+        <span class="text">&nbsp; Number of Tiles to Start: &nbsp;</span><input id="numTiles" type="number" max="10" min="5" maxlength="2" minlength="1" />
     </div>
-    <div id="wordDiv">
-        <table><tr>
-            <td>
-                <label id="labelWord" class="text">The&nbsp;Word:</label>
-            </td>
-            <td>
-                <div id="wordDisplay">
-                    <div class="text letter word">A</div>
-                    <div class="text letter word">B</div>
-                    <div class="text letter word">C</div>
-                    <div class="text letter word">D</div>
-                    <div class="text letter word">E</div>
-                    <div class="text letter word">F</div>
-                    <div class="text letter word">G</div>
-                    <div class="text letter word">H</div>
-                    <div class="text letter word">I</div>
-                    <div class="text letter word">J</div>
-                    <div class="text letter word">K</div>
-                    <div class="text letter word">L</div>
-                    <div class="text letter word">M</div>
-                    <div class="text letter word">N</div>
-                </div>
-            </td>
-        </tr></table>
-        <div id="qwerty">
+    <div id="infoDiv">
+        <table style="width: 100%;">
+            <tr>
+                <td>
+                    <ul class="legend">
+                        <li>1 point: E, A, I, O, N, R, T, L, S, U</li>
+                        <li>2 points: D, G</li>
+                        <li>3 points: B, C, M, P</li>
+                        <li>4 points: F, H, V, W, Y</li>
+                        <li>5 points: K</li>
+                        <li>8 points: J, X</li>
+                        <li>10 points: Q, Z</li>
+                    </ul>   
+                </td>
+                <td width="*">
+                    <div style="width: 100%; margin-left: 10px;">
+                        <div class="listbox">
+                            <table id="wordsTable" width="100%">
+                                <thead>
+                                    <tr><th width="*" style="text-align: left;">Word</th><th width="25%" style="text-align: right;">Points</th></tr>
+                                </thead>
+                                <tbody id="wordScores">
+                                    <tr><td>ABCDEFGHIJKLMNOP</td><td style="text-align: right;">25</td></tr>
+                                </tbody>
+                            </table>
+                        </div>
+                        <span class="text">Total Points:&nbsp;</span><span id="totalPointsUI" class="text">0</span>
+                        <div style="float: right;">
+                            <button id="btnHint" title="Get Suggestion from AI" onclick="getHint()" class="btnLetter">&quest;</button>
+                        </div>
+                    </div>
+                </td>
+            </tr>
+        </table>
+    </div>
+    <div id="board">
+        <div>
             <div id="msgDiv" class="msg">
                 <label id="msg"></label>
             </div>
-            <div id="qwerty1">
-                <button class="btnLetter" onclick="onUI(this)">Q</button>
-                <button class="btnLetter" onclick="onUI(this)">W</button>
-                <button class="btnLetter" onclick="onUI(this)">E</button>
-                <button class="btnLetter" onclick="onUI(this)">R</button>
-                <button class="btnLetter" onclick="onUI(this)">T</button>
-                <button class="btnLetter" onclick="onUI(this)">Y</button>
-                <button class="btnLetter" onclick="onUI(this)">U</button>
-                <button class="btnLetter" onclick="onUI(this)">I</button>
-                <button class="btnLetter" onclick="onUI(this)">O</button>
-                <button class="btnLetter" onclick="onUI(this)">P</button>
-            </div>
-            <div id="qwerty2">
-                    <button class="btnLetter" onclick="onUI(this)">A</button>
-                    <button class="btnLetter" onclick="onUI(this)">S</button>
-                    <button class="btnLetter" onclick="onUI(this)">D</button>
-                    <button class="btnLetter" onclick="onUI(this)">F</button>
-                    <button class="btnLetter" onclick="onUI(this)">G</button>
-                    <button class="btnLetter" onclick="onUI(this)">H</button>
-                    <button class="btnLetter" onclick="onUI(this)">J</button>
-                    <button class="btnLetter" onclick="onUI(this)">K</button>
-                    <button class="btnLetter" onclick="onUI(this)">L</button>
-            </div>
-            <div id="qwerty3">
-                    <button class="btnLetter" onclick="onUI(this)">Z</button>
-                    <button class="btnLetter" onclick="onUI(this)">X</button>
-                    <button class="btnLetter" onclick="onUI(this)">C</button>
-                    <button class="btnLetter" onclick="onUI(this)">V</button>
-                    <button class="btnLetter" onclick="onUI(this)">B</button>
-                    <button class="btnLetter" onclick="onUI(this)">N</button>
-                    <button class="btnLetter" onclick="onUI(this)">M</button>
+            <div class="buttonBar">
+                <button id="btnCancel" title="Cancel Word in Progress" onclick="cancelWord()" class="btnLetter">&cross;</button>
+                <button id="btnAccept" title="Accept Word in Progress" onclick="acceptWord()" class="btnLetter">&checkmark;</button>
             </div>
         </div>
+        <div id="tilesDiv">
+            <button class="btnLetter" onclick="playTileUI(this)"><span class="tileChr">Q</span><span class="tilePts">10</span></button>
+            <button class="btnLetter" onclick="playTileUI(this)"><span class="tileChr">W</span><span class="tilePts">4</span></button>
+            <button class="btnLetter" onclick="playTileUI(this)"><span class="tileChr">E</span><span class="tilePts">1</span></button>
+            <button class="btnLetter" onclick="playTileUI(this)"><span class="tileChr">R</span><span class="tilePts">1</span></button>
+            <button class="btnLetter" onclick="playTileUI(this)"><span class="tileChr">T</span><span class="tilePts">1</span></button>
+            <button class="btnLetter" onclick="playTileUI(this)"><span class="tileChr">Y</span><span class="tilePts">4</span></button>
+            <button class="btnLetter" onclick="playTileUI(this)"><span class="tileChr">U</span><span class="tilePts">1</span></button>
+            <button class="btnLetter" onclick="playTileUI(this)"><span class="tileChr">I</span><span class="tilePts">1</span></button>
+            <button class="btnLetter" onclick="playTileUI(this)"><span class="tileChr">O</span><span class="tilePts">1</span></button>
+            <button class="btnLetter" onclick="playTileUI(this)"><span class="tileChr">P</span><span class="tilePts">3</span></button>
+        </div>
     </div>
--->
+<script>
+    initUI();
+</script>
 </body>
 </html>
