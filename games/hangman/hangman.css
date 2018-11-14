@@ -4,10 +4,28 @@
     padding: 4px;
     font-size: 30px;
 }
+.text a {
+    font-size: 40px;
+}
+a:link {
+    text-decoration: none;
+    color: inherit;
+}
+a:hover {
+    text-decoration: none;
+}
+a:visited {
+    text-decoration: none;
+    color: inherit;
+}
+a:active {
+    text-decoration: none;
+    color: inherit;
+}
 .letter {
     float: left;
-    border: 2px;
-    border-color: black;
+    border: 1px solid black;
+    /*border-color: black;*/
     margin: 4px;
     text-align: center;
     font-family: 'Courier New', Courier, monospace;
@@ -21,7 +39,7 @@
     width: 510px;
     padding: 4px;
     font-size: 30px;
-    background-color: coral;
+    background-color: #50aaff;
     margin-bottom: 20px;
     text-align: center;
 }
@@ -39,6 +57,9 @@
     font-size: 30px;
     font-family: 'Courier New', Courier, monospace;
     margin: 4px;
+}
+.btnDisabled {
+    text-decoration: line-through;
 }
 #wordDiv {
     margin-top: 20px;
@@ -69,7 +90,7 @@
     width: 360px;
     top: 10px;
     left: 10px;
-    background-color: wheat;
+    background-color: beige; /* wheat; */
     display: none;
     position: absolute;
     z-index: 2;
@@ -79,7 +100,7 @@
     padding: 6px;
 }
 .modalTitle {
-    background-color: coral;
+    background-color: #50aaff; /* coral;*/
     font-weight: bold;
     font-size: 18px;
     padding: 8px;

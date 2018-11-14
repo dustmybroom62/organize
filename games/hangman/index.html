@@ -2,6 +2,7 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Hangman</title>
     <link rel="stylesheet" href="./hangman.css" />
     <script src="../resources/words.js"></script>
@@ -30,7 +31,7 @@
             </div>
         </div>
     <div id="topDiv">
-        <span class="text">&nbsp;&nbsp;<a href="javascript:openSettings()" title="Settings">...</a>&nbsp;&nbsp;&nbsp;&nbsp;</span>
+        <span class="text">&nbsp;<a href="javascript:openSettings()" title="Settings">&equiv;</a>&nbsp;</span>
         <button class="btn" id="startGame" onclick="hangman()">Start&nbsp;New&nbsp;Game</button>
         <span class="text">&nbsp; Guesses Remaining: &nbsp;</span><span class="text" id="guessesRemaining">0</span>
     </div>

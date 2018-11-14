@@ -14,6 +14,7 @@ function initUI() {
     btns = document.querySelectorAll('.btnLetter');
     for (var i = 0; i < btns.length; i++) {
         btns[i].disabled = false;
+        btns[i].className = 'btnLetter';
     }
     ltrs = document.querySelectorAll('.word');
     for (var i = 0; i < ltrs.length; i++) {
@@ -30,7 +31,10 @@ function msgUI(txt) {
 function onUI(btn) {
     if (!gameOver)
         btn.disabled = true;
-    processGuess(btn.innerText);
+    let goodGuess = processGuess(btn.innerText);
+    if (!goodGuess) {
+        btn.classList.add('btnDisabled');
+    }
 }
 // #endregion game UI
 
@@ -178,9 +182,10 @@ function processGuess(guess) {
     /*
     guess: string, the letter to guess.
     */
+   let correct = true;
     if (gameOver) {
         alert(guess + ': The Game Has Ended');
-        return;
+        return correct;
     }
     lettersGuessed.push(guess)
     if (secretWord.indexOf(guess) >= 0) {
@@ -190,6 +195,7 @@ function processGuess(guess) {
             showWinner()
         }
     } else {
+        correct = false;
         guessesLeft -= 1;
         if (1 > guessesLeft) {
             gameOver = true;
@@ -199,6 +205,7 @@ function processGuess(guess) {
         }
     }
     updateUI();
+    return correct;
 }
 
 function chooseWordList() {
