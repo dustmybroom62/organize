@@ -1,23 +1,23 @@
 // #region game UI
 function updateUI() {
-    gr = document.querySelector('#guessesRemaining');
+    let gr = document.querySelector('#guessesRemaining');
     gr.innerText = guessesLeft;
-    ltrs = document.querySelectorAll('.word');
+    let ltrs = document.querySelectorAll('.word');
     word = getGuessedWord(secretWord, lettersGuessed);
-    for (var i = 0; i < word.length; i++) {
+    for (let i = 0; i < word.length; i++) {
         ltrs[i].innerText = word[i];
         ltrs[i].style.display = 'block';
     }
 }
 
 function initUI() {
-    btns = document.querySelectorAll('.btnLetter');
-    for (var i = 0; i < btns.length; i++) {
+    let btns = document.querySelectorAll('.btnLetter');
+    for (let i = 0; i < btns.length; i++) {
         btns[i].disabled = false;
         btns[i].className = 'btnLetter';
     }
-    ltrs = document.querySelectorAll('.word');
-    for (var i = 0; i < ltrs.length; i++) {
+    let ltrs = document.querySelectorAll('.word');
+    for (let i = 0; i < ltrs.length; i++) {
         ltrs[i].innerText = "";
         ltrs[i].style.display = "none";
     }
@@ -46,15 +46,15 @@ function settingsError(msg) {
     return false;
 }
 function saveSettings() {
-    var ng = document.all.numGuesses.value;
+    let ng = document.all.numGuesses.value;
 
     if (!ng || 0 > ng || 9 < ng) {
         return settingsError("Missed Guesses Allowed must be between 1 and 9");
     }
-    lenChks = document.querySelectorAll('#wordLengthsUL li input');
-    lens = settings.wordLensSelected.slice(0);
-    lenChecked = false;
-    for (var i = 0; i < lenChks.length; i++) {
+    let lenChks = document.querySelectorAll('#wordLengthsUL li input');
+    let lens = settings.wordLensSelected.slice(0);
+    let lenChecked = false;
+    for (let i = 0; i < lenChks.length; i++) {
         lenChecked |= (lens[i] = lenChks[i].checked);
     }
     if (!lenChecked) return settingsError("Please select at least one word length.")
@@ -65,15 +65,15 @@ function saveSettings() {
 }
 function loadSettings() {
     document.all.numGuesses.value = settings.numGuesses;
-    ul = document.all.wordLengthsUL;
-    for (var i = ul.children.length; i > 0 ; i--) {
+    let ul = document.all.wordLengthsUL;
+    for (let i = ul.children.length; i > 0 ; i--) {
         ul.children[i - 1].remove();
     }
-    for (var i = 0; i < settings.wordLengths.length; i++) {
-        val = settings.wordLengths[i];
-        selected = settings.wordLensSelected[i];
-        li = document.createElement('li');
-        chk = document.createElement('input');
+    for (let i = 0; i < settings.wordLengths.length; i++) {
+        let val = settings.wordLengths[i];
+        let selected = settings.wordLensSelected[i];
+        let li = document.createElement('li');
+        let chk = document.createElement('input');
         chk.type = 'checkbox';
         chk.name = 'wordlen';
         chk.value = val;
@@ -83,6 +83,12 @@ function loadSettings() {
         sp.innerText = val;
         li.appendChild(sp);
         ul.appendChild(li);
+    }
+}
+function wordLenSelectAll(checked) {
+    let chks = document.getElementsByName('wordlen');
+    for (let i = 0; i < chks.length; i++) {
+        chks[i].checked = checked;
     }
 }
 function openSettings() {
@@ -114,7 +120,7 @@ function badGuess(guess) {
 function loadWords(){
     console.log("Loading word list from file...");
     // wordlist: list of strings
-    var wordlist = words.split(' ');
+    let wordlist = words.split(' ');
     console.log(wordlist.length + " words loaded.");
     return wordlist;
 }
@@ -130,8 +136,8 @@ function isWordGuessed(secretWord, lettersGuessed) {
     returns: boolean, True if all the letters of secretWord are in lettersGuessed;
       False otherwise
     */
-    for (var i = 0; i < secretWord.length; i++) {
-        c = secretWord[i];
+    for (let i = 0; i < secretWord.length; i++) {
+        let c = secretWord[i];
         if (lettersGuessed.indexOf(c) < 0)
             return false;
     }
@@ -145,9 +151,9 @@ function getGuessedWord(secretWord, lettersGuessed) {
     returns: string, comprised of letters and underscores that represents
       what letters in secretWord have been guessed so far.
     */
-    result = [];
-    for (var i = 0; i < secretWord.length; i++) {
-        var c = secretWord[i];
+   let result = [];
+    for (let i = 0; i < secretWord.length; i++) {
+        let c = secretWord[i];
         if (lettersGuessed.indexOf(c) >= 0)
             result.push(c);
         else
@@ -157,7 +163,7 @@ function getGuessedWord(secretWord, lettersGuessed) {
 }
 //console.log(getGuessedWord('banjo', ['b','a','n','j']))
 var a2z = [] //.join(chr(i + ord('a')) for i in range(26))
-for (var i = 0; i < 26; i++) {a2z.push( String.fromCharCode( 'A'.charCodeAt(0) + i) );}
+for (let i = 0; i < 26; i++) {a2z.push( String.fromCharCode( 'A'.charCodeAt(0) + i) );}
 //console.log(a2z);
 function getAvailableLetters(lettersGuessed) {
     /*
@@ -165,9 +171,9 @@ function getAvailableLetters(lettersGuessed) {
     returns: string, comprised of letters that represents what letters have not
       yet been guessed.
     */
-    result = [];
-    for (var i = 0; i < a2z.length; i++) {
-        var c = a2z[i];
+   let result = [];
+    for (let i = 0; i < a2z.length; i++) {
+        let c = a2z[i];
         if ( lettersGuessed.indexOf(c) < 0 )
             result.push(c);
     }
@@ -197,7 +203,7 @@ function processGuess(guess) {
             showWinner()
         }
     } else {
-        correct = false;
+        let correct = false;
         guessesLeft -= 1;
         if (1 > guessesLeft) {
             gameOver = true;
@@ -211,13 +217,13 @@ function processGuess(guess) {
 }
 
 function chooseWordList() {
-    lens = [];
-    for (var i = 0; i < settings.wordLensSelected.length; i++) {
+    let lens = [];
+    for (let i = 0; i < settings.wordLensSelected.length; i++) {
         if (settings.wordLensSelected[i]) {
             lens.push(settings.wordLengths[i]);
         }
     }
-    n = Math.trunc(Math.random() * lens.length);
+    let n = Math.trunc(Math.random() * lens.length);
     return wordLists[lens[n]];
 }
 
@@ -249,11 +255,11 @@ function hangman() {
 }
 
 function coallateWordLists(wordList) {
-    var result = {};
-    for (var i = 0; i < wordList.length; i++) {
-        w = wordList[i];
-        n = w.length;
-        list = result[n];
+    let result = {};
+    for (let i = 0; i < wordList.length; i++) {
+        let w = wordList[i];
+        let n = w.length;
+        let list = result[n];
         if (!list) {
             result[n] = [];
             list = result[n];
@@ -264,8 +270,8 @@ function coallateWordLists(wordList) {
 }
 
 function initSettings(wordLists) {
-    keys = Object.keys(wordLists);
-    for (var i = 0; i < keys.length; i++) {
+    let keys = Object.keys(wordLists);
+    for (let i = 0; i < keys.length; i++) {
         if (10 > wordLists[keys[i]].length) continue;
         settings.wordLengths.push(keys[i]);
         settings.wordLensSelected.push(1);
