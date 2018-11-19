@@ -190,7 +190,7 @@ function processGuess(guess) {
     /*
     guess: string, the letter to guess.
     */
-   let correct = true;
+    let correct = true;
     if (gameOver) {
         alert(guess + ': The Game Has Ended');
         return correct;
@@ -203,7 +203,7 @@ function processGuess(guess) {
             showWinner()
         }
     } else {
-        let correct = false;
+        correct = false;
         guessesLeft -= 1;
         if (1 > guessesLeft) {
             gameOver = true;
