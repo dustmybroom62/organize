@@ -1,11 +1,14 @@
+body {
+    font-family: Verdana, Geneva, Tahoma, sans-serif; /* 'Courier New', Courier, monospace; */
+}
 .text {
-    height: 40px;
-    width: 40px;
+    height: 30px;
+    width: 30px;
     padding: 4px;
-    font-size: 30px;
+    font-size: 24px;
 }
 .text a {
-    font-size: 40px;
+    font-size: 24px;
 }
 a:link {
     text-decoration: none;
@@ -28,19 +31,18 @@ a:active {
     /*border-color: black;*/
     margin: 4px;
     text-align: center;
-    font-family: 'Courier New', Courier, monospace;
+    font-family: Verdana, Geneva, Tahoma, sans-serif; /* 'Courier New', Courier, monospace; */
 }
 .word {
     background-color: beige;
     display: none;
 }
 .msg {
-    height: 40px;
+    height: 30px;
     width: 510px;
     padding: 4px;
-    font-size: 30px;
+    font-size: 24px;
     background-color: #50aaff;
-    margin-bottom: 20px;
     text-align: center;
 }
 .noFloat {
@@ -48,25 +50,31 @@ a:active {
 }
 .btn {
     padding: 4px;
-    font-size: 30px;
+    font-size: 24px;
 }
 .btnLetter {
     height: 40px;
     width: 40px;
     padding: 4px;
-    font-size: 30px;
-    font-family: 'Courier New', Courier, monospace;
+    font-size: 24px;
+    font-family: Verdana, Geneva, Tahoma, sans-serif; /* 'Courier New', Courier, monospace; */
     margin: 4px;
 }
-.btnDisabled {
+.btnBadGuess {
     text-decoration: line-through;
 }
+.btnDisabled {
+    background-color: white;
+}
 #wordDiv {
-    margin-top: 20px;
+    margin-top: 2px;
+}
+#wordDisplay {
+    height: 50px;
 }
 #qwerty {
-    margin-top: 40px;
-    margin-left: 120px;
+    margin-top: 20px;
+    margin-left: 60px;
 }
 #qwerty2 {
     margin-left: 20px;
@@ -95,7 +103,7 @@ a:active {
     position: absolute;
     z-index: 2;
     opacity: 1;
-    font-family: 'Courier New', Courier, monospace;
+    font-family: Verdana, Geneva, Tahoma, sans-serif; /* 'Courier New', Courier, monospace; */
     font-size: 18px;
     padding: 6px;
 }

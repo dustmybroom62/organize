@@ -29,11 +29,13 @@ function msgUI(txt) {
 }
 
 function onUI(btn) {
-    if (!gameOver)
-        btn.disabled = true;
+    if (!gameOver) {
+        btn.disabled = true;        
+        btn.classList.add('btnDisabled');
+    }
     let goodGuess = processGuess(btn.innerText);
     if (!goodGuess) {
-        btn.classList.add('btnDisabled');
+        btn.classList.add('btnBadGuess');
     }
 }
 // #endregion game UI

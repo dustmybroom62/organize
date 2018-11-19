@@ -14,7 +14,7 @@
     <div id="settings" class="modal">
         <div class="modalTitle">Settings</div>
             <div class="modalSection">
-                <label>Missed Guesses Allowed:&nbsp;</label>
+                <label>Mistakes Allowed:&nbsp;</label>
                 <input id="numGuesses" type="number" minlength="1" maxlength="1" min="1" max="9" />
             </div>
             <div class="modalSection">
@@ -32,38 +32,35 @@
         </div>
     <div id="topDiv">
         <span class="text">&nbsp;<a href="javascript:openSettings()" title="Settings">&equiv;</a>&nbsp;</span>
-        <button class="btn" id="startGame" onclick="hangman()">Start&nbsp;New&nbsp;Game</button>
-        <span class="text">&nbsp; Guesses Remaining: &nbsp;</span><span class="text" id="guessesRemaining">0</span>
+        <button class="btn" id="startGame" onclick="hangman()">New&nbsp;Game</button>
+        <span class="text">&nbsp; Mistakes Remaining: &nbsp;</span><span class="text" id="guessesRemaining">0</span>
     </div>
     <div id="wordDiv">
-        <table><tr>
-            <td>
-                <label id="labelWord" class="text">The&nbsp;Word:</label>
-            </td>
-            <td>
-                <div id="wordDisplay">
-                    <div class="text letter word">A</div>
-                    <div class="text letter word">B</div>
-                    <div class="text letter word">C</div>
-                    <div class="text letter word">D</div>
-                    <div class="text letter word">E</div>
-                    <div class="text letter word">F</div>
-                    <div class="text letter word">G</div>
-                    <div class="text letter word">H</div>
-                    <div class="text letter word">I</div>
-                    <div class="text letter word">J</div>
-                    <div class="text letter word">K</div>
-                    <div class="text letter word">L</div>
-                    <div class="text letter word">M</div>
-                    <div class="text letter word">N</div>
-                </div>
-            </td>
-        </tr></table>
         <div id="qwerty">
             <div id="msgDiv" class="msg">
-                <label id="msg"></label>
+                <label id="msg">Click New Game to Begin</label>
             </div>
-            <div id="qwerty1">
+            <table><tr>
+                <td>
+                    <div id="wordDisplay">
+                        <div class="text letter word">A</div>
+                        <div class="text letter word">B</div>
+                        <div class="text letter word">C</div>
+                        <div class="text letter word">D</div>
+                        <div class="text letter word">E</div>
+                        <div class="text letter word">F</div>
+                        <div class="text letter word">G</div>
+                        <div class="text letter word">H</div>
+                        <div class="text letter word">I</div>
+                        <div class="text letter word">J</div>
+                        <div class="text letter word">K</div>
+                        <div class="text letter word">L</div>
+                        <div class="text letter word">M</div>
+                        <div class="text letter word">N</div>
+                    </div>
+                </td>
+            </tr></table>
+                <div id="qwerty1">
                 <button class="btnLetter" onclick="onUI(this)">Q</button>
                 <button class="btnLetter" onclick="onUI(this)">W</button>
                 <button class="btnLetter" onclick="onUI(this)">E</button>
