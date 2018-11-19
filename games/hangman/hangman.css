@@ -1,11 +1,13 @@
 body {
     font-family: Verdana, Geneva, Tahoma, sans-serif; /* 'Courier New', Courier, monospace; */
+    background-color: black;
 }
 .text {
     height: 30px;
     width: 30px;
     padding: 4px;
     font-size: 24px;
+    color: white;
 }
 .text a {
     font-size: 24px;
@@ -35,6 +37,7 @@ a:active {
 }
 .word {
     background-color: beige;
+    color: black;
     display: none;
 }
 .msg {
@@ -58,6 +61,7 @@ a:active {
     padding: 4px;
     font-size: 24px;
     font-family: Verdana, Geneva, Tahoma, sans-serif; /* 'Courier New', Courier, monospace; */
+    background-color: #50aaff;
     margin: 4px;
 }
 .btnBadGuess {
