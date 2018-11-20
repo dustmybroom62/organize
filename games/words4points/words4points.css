@@ -123,6 +123,7 @@ body {
 #msgDiv {
     float: left;
     width: 450px;
+    clear: both;
 }
 #tilesDiv {
     clear: both;

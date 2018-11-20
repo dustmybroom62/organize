@@ -83,11 +83,6 @@
                                 </tbody>
                             </table>
                         </div>
-                        <div style="float: left;">
-                            <button id="btnHint" title="Get Suggestion from AI" onclick="getHint()" class="btnLetter">
-                                <span class="tileChr">&quest;</span>
-                            </button>
-                        </div>
                         <div style="float: right;">
                             <span class="text">Total Points:&nbsp;</span><span id="totalPointsUI" class="text">0</span>
                         </div>
@@ -97,16 +92,7 @@
         </table>
     </div>
     <div id="board">
-        <div>
-            <div id="msgDiv" class="msg">
-                <label id="msg"></label>
-            </div>
-            <div class="buttonBar">
-                <button id="btnCancel" title="Cancel Word in Progress" onclick="cancelWord()" class="btnLetter"><span class="tileChr">&cross;</span></button>
-                <button id="btnAccept" title="Accept Word in Progress" onclick="acceptWord()" class="btnLetter"><span class="tileChr">&checkmark;</span></button>
-            </div>
-        </div>
-        <div id="tilesDiv">
+        <div id="tilesDiv" style="float: left;">
             <button class="btnLetter" onclick="playTileUI(this)"><span class="tileChr">Q</span><span class="tilePts">10</span></button>
             <button class="btnLetter" onclick="playTileUI(this)"><span class="tileChr">W</span><span class="tilePts">4</span></button>
             <button class="btnLetter" onclick="playTileUI(this)"><span class="tileChr">E</span><span class="tilePts">1</span></button>
@@ -117,6 +103,20 @@
             <button class="btnLetter" onclick="playTileUI(this)"><span class="tileChr">I</span><span class="tilePts">1</span></button>
             <button class="btnLetter" onclick="playTileUI(this)"><span class="tileChr">O</span><span class="tilePts">1</span></button>
             <button class="btnLetter" onclick="playTileUI(this)"><span class="tileChr">P</span><span class="tilePts">3</span></button>
+        </div>
+        <div style="float: right;">
+            <button id="btnHint" title="Get Suggestion from AI" onclick="getHint()" class="btnLetter">
+                <span class="tileChr">&quest;</span>
+            </button>
+        </div>
+        <div>
+            <div id="msgDiv" class="msg">
+                <label id="msg"></label>
+            </div>
+            <div class="buttonBar">
+                <button id="btnCancel" title="Cancel Word in Progress" onclick="cancelWord()" class="btnLetter"><span class="tileChr">&cross;</span></button>
+                <button id="btnAccept" title="Accept Word in Progress" onclick="acceptWord()" class="btnLetter"><span class="tileChr">&checkmark;</span></button>
+            </div>
         </div>
     </div>
 <script>
