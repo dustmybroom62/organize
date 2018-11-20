@@ -16,32 +16,38 @@ function enableReplayUI() {
 }
 
 function updateTilesUI() {
-    tiles = getTiles(currentHand);
-    tilesEl = document.all.tilesDiv;
-    newTiles = "";
+    let tiles = getTiles(_currentHand);
+    let tilesEl = document.all.tilesDiv;
+    let newTiles = "";
     for (let i = 0; i < tiles.length; i++) {
-        s = document.createElement('span');
+        // let s = document.createElement('span');
         newTiles += buildTileUI(i, tiles[i]);
     }
     tilesEl.innerHTML = newTiles;
 }
 
+function diableButtonUI(btn) {
+    btn.disabled = true;
+    btn.classList.add('btnDisabled');
+}
+
 function disableAllTiles() {
-    tilesEl = document.all.tilesDiv;
+    let tiles = getTiles(_currentHand);
+    let tilesEl = document.all.tilesDiv;
     for (let i = 0; i < tiles.length; i++) {
-        tilesEl.children[i].disabled = true;
+        diableButtonUI(tilesEl.children[i]);
     }
 }
 
 function updateUI() {
-    document.all.totalPointsUI.innerText = totalPoints;
+    document.all.totalPointsUI.innerText = _totalPoints;
     document.all.numTiles.value = _HandSize;
     updateTilesUI();
 }
 
 function initUI() {
     document.all.numTiles.value = _HandSize;
-    wordScoresEl = document.all.wordScores;
+    let wordScoresEl = document.all.wordScores;
     childCount = wordScoresEl.children.length;
     for (let i = 0; i < childCount; i++) {
         wordScoresEl.children[0].remove();
@@ -56,42 +62,42 @@ function initUI() {
 }
 
 function appendWordScoreUI(word, score) {
-    wordScoresEl = document.all.wordScores;
-    newRow = document.createElement('tr');
+    let wordScoresEl = document.all.wordScores;
+    let newRow = document.createElement('tr');
     newRow.innerHTML = buildWordScoreUI(word, score);
     wordScoresEl.appendChild(newRow);
 }
 
 function cancelWord() {
-    currentWord = [];
+    _currentWord = [];
     updateUI();
     msgUI('');
 }
 
 function acceptWord() {
-    word = currentWord.join('');
-    if (isValidWord(word, currentHand, wordLists)) {
-        score = getWordScore(word, _HandSize);
-        totalPoints += score;
+    let word = _currentWord.join('');
+    if (isValidWord(word, _currentHand, _wordLists)) {
+        let score = getWordScore(word, _HandSize);
+        _totalPoints += score;
         appendWordScoreUI(word, score);
-        currentHand = updateHand(currentHand, word);
+        _currentHand = updateHand(_currentHand, word);
         msgUI(`Accepted: ${word} - ${score} pts.`);
     } else {
         msgUI(`"${word}" is not a valid word.`);
     }
-    currentWord = [];
+    _currentWord = [];
     updateUI();
 }
 
 function getHint() {
-    currentWord = [];
-    word = compChooseWord(currentHand, wordLists, _HandSize);
+    _currentWord = [];
+    let word = compChooseWord(_currentHand, _wordLists, _HandSize);
     if (word) {
         for (let i = 0; i < word.length; i++) {
-            currentWord.push(word[i]);
+            _currentWord.push(word[i]);
         }
         disableAllTiles();
-        points = getWordScore(word, _HandSize);
+        let points = getWordScore(word, _HandSize);
         msgUI(`Hint: ${word} - ${points} pts.`);
     } else {
         msgUI("No Hint Available.");
@@ -101,7 +107,7 @@ function getHint() {
 
 // <div style="display: inline-block">
 function buildTileUI(idx, letter) {
-    points = SCRABBLE_LETTER_VALUES[letter];
+    let points = SCRABBLE_LETTER_VALUES[letter];
     return `<button class="btnLetter" onclick="playTileUI(this, ${idx})"><span class="tileChr">${letter}</span><span class="tilePts">${points}</span></button>`;
 }
 
@@ -124,45 +130,46 @@ function collectSettings() {
 }
 
 function playTileUI(btn, idx) {
-    if (!gameOver)
-        btn.disabled = true;
-    tiles = getTiles(currentHand);
-    currentWord.push(tiles[idx]);
-    strWord = currentWord.join('');
+    if (!_gameOver) {
+        diableButtonUI(btn);
+    }
+    let tiles = getTiles(_currentHand);
+    _currentWord.push(tiles[idx]);
+    let strWord = _currentWord.join('');
     msgUI(`${strWord} - ${getWordScore(strWord, _HandSize)} pts.`);
 }
 // #endregion game UI
 
-var gameOver = true;
-var startHand = {};
-var currentHand = {};
-var currentWord = [];
-var totalPoints = 0;
+var _gameOver = true;
+var _startHand = {};
+var _currentHand = {};
+var _currentWord = [];
+var _totalPoints = 0;
 
 function replayHand() {
-    gameOver = false;
-    currentHand = Object.assign({}, startHand);
-    currentWord = [];
-    totalPoints = 0;
+    _gameOver = false;
+    _currentHand = Object.assign({}, _startHand);
+    _currentWord = [];
+    _totalPoints = 0;
     initUI();
 }
 function startGame() {
     if (!collectSettings()) return false;
     enableReplayUI();
-    startHand = dealHand(_HandSize);
+    _startHand = dealHand(_HandSize);
     replayHand();
 }
 
 function loadWords() {
     console.log("Loading word list from file...");
     // wordlist: list of strings
-    var wordlist = words.split(' ');
+    let wordlist = words.split(' ');
     console.log(wordlist.length + " words loaded.");
     return wordlist;
 }
 
 function coallateWordLists(wordList) {
-    var result = {};
+    let result = {};
     for (let i = 0; i < wordList.length; i++) {
         let w = wordList[i];
         let n = w.length;
@@ -175,9 +182,9 @@ function coallateWordLists(wordList) {
     }
     return result;
 }
-var allWords = loadWords();
-var wordLists = coallateWordLists(allWords);
-console.log(wordLists);
+var _allWords = loadWords();
+var _wordLists = coallateWordLists(_allWords);
+console.log(_wordLists);
 
 function getFrequencyDict(sequence) {
     /*
@@ -189,9 +196,9 @@ function getFrequencyDict(sequence) {
     return: dictionary
     */
     //# freqs: dictionary (element_type -> int)
-    freq = {};
+    let freq = {};
     for (let x = 0; x < sequence.length; x++) {
-        c = sequence[x];
+        let c = sequence[x];
         freq[c] = (freq[c] ? freq[c] : 0) + 1;
     }
     return freq
@@ -213,10 +220,10 @@ function getWordScore(word, n) {
     returns: int >= 0
     */
 
-    points = 0;
-    wordLen = word.length;
+    let points = 0;
+    let wordLen = word.length;
     for (let i = 0; i < wordLen; i++) {
-        c = word[i];
+        let c = word[i];
         points += SCRABBLE_LETTER_VALUES[c]
     }
     points *= wordLen;
@@ -240,10 +247,10 @@ function getTiles(hand) {
 
     hand: dictionary (string -> int)
     */
-   result = [];
-   keys = Object.keys(hand);
+    let result = [];
+    let keys = Object.keys(hand);
     for (let i = 0; i < keys.length; i++) {
-        letter = keys[i];
+        let letter = keys[i];
         for (let j = 0; j < hand[letter]; j++) {
             result.push(letter);
         }
@@ -264,15 +271,15 @@ function dealHand(n) {
     n: int >= 0
     returns: dictionary (string -> int)
     */
-    hand = {}
-    numVowels = Math.trunc(n / 3);
+    let hand = {}
+    let numVowels = Math.trunc(n / 3);
     
     for (let i = 0; i < numVowels; i++) {
-        x = VOWELS[Math.trunc(Math.random() * VOWELS.length)]
+        let x = VOWELS[Math.trunc(Math.random() * VOWELS.length)]
         hand[x] = (hand[x] ? hand[x] : 0) + 1;
     }
     for (let i = numVowels; i < n; i++) {
-        x = CONSONANTS[Math.trunc(Math.random() * CONSONANTS.length)]
+        let x = CONSONANTS[Math.trunc(Math.random() * CONSONANTS.length)]
         hand[x] = (hand[x] ? hand[x] : 0) + 1;
     }
     return hand
@@ -297,11 +304,11 @@ function updateHand(hand, word) {
     hand: dictionary (string -> int)    
     returns: dictionary (string -> int)
     */
-    newHand = Object.assign({}, hand);
-    remove = getFrequencyDict(word);
-    keys = Object.keys(remove);
+    let newHand = Object.assign({}, hand);
+    let remove = getFrequencyDict(word);
+    let keys = Object.keys(remove);
     for (let i = 0; i < keys.length; i++) {
-        c = keys[i];
+        let c = keys[i];
         newHand[c] -= remove[c];
     }
     return newHand
@@ -321,10 +328,10 @@ function isValidWord(word, hand, wordLists) {
     hand: dictionary (string -> int)
     wordList: list of lowercase strings
     */
-    letterCount = getFrequencyDict(word);
-    keys = Object.keys(letterCount);
+    let letterCount = getFrequencyDict(word);
+    let keys = Object.keys(letterCount);
     for (let i = 0; i < keys.length; i++) {
-        c = keys[i];
+        let c = keys[i];
         if (letterCount[c] > (hand[c] ? hand[c] : 0)) {
             return false;
         }
@@ -335,7 +342,7 @@ function isValidWord(word, hand, wordLists) {
     return true;
 }
 console.log("isValidWord('MOUSE', {M:1, O:1, U:1, S:1, E:1}, wordLists)");
-console.log(isValidWord('MOUSE', {M:1, O:1, U:1, S:1, E:1}, wordLists));
+console.log(isValidWord('MOUSE', {M:1, O:1, U:1, S:1, E:1}, _wordLists));
 console.log("isValidWord('MOUSE', {D:1, O:1, U:1, S:1, E:1})");
 console.log(isValidWord('MOUSE', {D:1, O:1, U:1, S:1, E:1}));
 
@@ -346,8 +353,8 @@ function calculateHandlen(hand) {
     hand: dictionary (string-> int)
     returns: integer
     */
-    result = 0;
-    v = Object.values(hand);
+    let result = 0;
+    let v = Object.values(hand);
     for (let i = 0; i < v.length; i++) {
         result += v[i];
     }
@@ -373,22 +380,22 @@ function compChooseWord(hand, wordLists, n) {
     returns: string or null
     */
     //# Create a new variable to store the maximum score seen so far (initially 0)
-    bestScore = 0;
+    let bestScore = 0;
     //# Create a new variable to store the best word seen so far (initially null)  
-    bestWord = null
-    handLen = calculateHandlen(hand);
+    let bestWord = null
+    let handLen = calculateHandlen(hand);
     for (let i = handLen; i > 0; i--) {
-        bestUpdated = false; // reset each wordList
-        wordList = wordLists[i];
+        let bestUpdated = false; // reset each wordList
+        let wordList = wordLists[i];
         //# For each word in the wordList
         for (let j = 0; j < wordList.length; j++) {
-            word = wordList[j];
+            let word = wordList[j];
             //# If you can construct the word from your hand
             if (isValidWord(word, hand)) {
                 // if all letters used, no need to search any further
                 if (i == handLen) return word;
                 //# find out how much making that word is worth
-                score = getWordScore(word, n)
+                let score = getWordScore(word, n)
                 //# If the score for that word is higher than your best score
                 if (score > bestScore) {
                     //# update your best score, and best word accordingly
@@ -405,7 +412,7 @@ function compChooseWord(hand, wordLists, n) {
     return bestWord
 }
 console.log("compChooseWord({M:1, O:1, U:1, S:1, E:1, X:2}, wordLists, HAND_SIZE)");
-console.log(compChooseWord({M:1, O:1, U:1, S:1, E:1, X:2}, wordLists, _HandSize));
+console.log(compChooseWord({M:1, O:1, U:1, S:1, E:1, X:2}, _wordLists, _HandSize));
 console.log("compChooseWord({H:1, Q:1, L:1, B:1, O:1, A:1, R:1}, wordLists, HAND_SIZE)");
-console.log(compChooseWord({H:1, Q:1, L:1, B:1, O:1, A:1, R:1}, wordLists, _HandSize));
+console.log(compChooseWord({H:1, Q:1, L:1, B:1, O:1, A:1, R:1}, _wordLists, _HandSize));
 

@@ -49,7 +49,13 @@
     <div id="topDiv">
         <button class="btn" id="btnStart" onclick="startGame()">New&nbsp;Game</button>&nbsp;
         <button class="btn" id="btnReplay" onclick="replayHand()" disabled="true">Replay</button>
-        <span class="text">&nbsp; Number of Tiles to Start: &nbsp;</span><input id="numTiles" type="number" max="10" min="5" maxlength="2" minlength="1" />
+        <span class="text">&nbsp;Number of Tiles:&nbsp;</span>
+        <select id="numTiles">
+            <option value="7">7</option>
+            <option value="8">8</option>
+            <option value="9">9</option>
+            <option value="10">10</option>
+        </select>
     </div>
     <div id="infoDiv">
         <table style="width: 100%;">
@@ -77,9 +83,13 @@
                                 </tbody>
                             </table>
                         </div>
-                        <span class="text">Total Points:&nbsp;</span><span id="totalPointsUI" class="text">0</span>
+                        <div style="float: left;">
+                            <button id="btnHint" title="Get Suggestion from AI" onclick="getHint()" class="btnLetter">
+                                <span class="tileChr">&quest;</span>
+                            </button>
+                        </div>
                         <div style="float: right;">
-                            <button id="btnHint" title="Get Suggestion from AI" onclick="getHint()" class="btnLetter">&quest;</button>
+                            <span class="text">Total Points:&nbsp;</span><span id="totalPointsUI" class="text">0</span>
                         </div>
                     </div>
                 </td>
@@ -92,8 +102,8 @@
                 <label id="msg"></label>
             </div>
             <div class="buttonBar">
-                <button id="btnCancel" title="Cancel Word in Progress" onclick="cancelWord()" class="btnLetter">&cross;</button>
-                <button id="btnAccept" title="Accept Word in Progress" onclick="acceptWord()" class="btnLetter">&checkmark;</button>
+                <button id="btnCancel" title="Cancel Word in Progress" onclick="cancelWord()" class="btnLetter"><span class="tileChr">&cross;</span></button>
+                <button id="btnAccept" title="Accept Word in Progress" onclick="acceptWord()" class="btnLetter"><span class="tileChr">&checkmark;</span></button>
             </div>
         </div>
         <div id="tilesDiv">

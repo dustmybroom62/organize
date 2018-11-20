@@ -1,8 +1,13 @@
+body {
+    background-color: black;
+}
 .text {
-    height: 40px;
-    width: 40px;
+    height: 30px;
+    width: 30px;
     padding: 4px;
-    font-size: 30px;
+    font-size: 24px;
+    font-family: Verdana, Geneva, Tahoma, sans-serif; /* 'Courier New', Courier, monospace; */
+    color: white
 }
 .letter {
     float: left;
@@ -10,7 +15,7 @@
     border-color: black;
     margin: 4px;
     text-align: center;
-    font-family: 'Courier New', Courier, monospace;
+    font-family: Verdana, Geneva, Tahoma, sans-serif; /* 'Courier New', Courier, monospace; */
 }
 .word {
     background-color: beige;
@@ -19,38 +24,42 @@
 .msg {
     height: 40px;
     padding: 4px;
-    font-size: 30px;
-    background-color: coral;
-    margin-bottom: 20px;
+    font-size: 24px;
+    background-color: #50aaff;
+    margin-bottom: 10px;
     text-align: left;
+    font-family: Verdana, Geneva, Tahoma, sans-serif; /* 'Courier New', Courier, monospace; */
 }
 .noFloat {
     float: none !important;
 }
 .btn {
     padding: 4px;
-    font-size: 30px;
+    font-size: 24px;
+}
+.btnDisabled {
+    background-color: white;
+    text-decoration: line-through;
 }
 .btnLetter {
     height: 40px;
     width: 40px;
     padding: 4px;
-    font-family: 'Courier New', Courier, monospace;
+    font-family: Verdana, Geneva, Tahoma, sans-serif; /* 'Courier New', Courier, monospace; */
     margin: 4px;
 }
 .tileChr {
-    font-size: 30px;
+    font-size: 24px;
 }
 .tilePts {
     font-size: 10px;
 }
 #infoDiv {
-    margin-top: 20px;
+    font-family: Verdana, Geneva, Tahoma, sans-serif; /* 'Courier New', Courier, monospace; */
 }
 #board {
-    margin-top: 40px;
     margin-left: 10px;
-    margin-right: 60px;
+    margin-right: 10px;
     align-items: center;
 }
 .modalBackground {
@@ -93,7 +102,7 @@
 }
 .listbox {
     background-color: white;
-    height: 150px;
+    height: 120px;
     overflow-y: scroll;
 }
 .listbox table {
@@ -101,13 +110,15 @@
 }
 .legend {
     margin-top: 0;
+    font-size: 14px;
+    color: white;
 }
 .buttonBar {
     float: left;
 }
 #msgDiv {
     float: left;
-    width: 510px;
+    width: 450px;
 }
 #tilesDiv {
     clear: both;
