@@ -111,6 +111,7 @@ a:active {
     font-family: Verdana, Geneva, Tahoma, sans-serif; /* 'Courier New', Courier, monospace; */
     font-size: 18px;
     padding: 6px;
+    border-radius: 2px;
 }
 .modalTitle {
     background-color: #50aaff; /* coral;*/
@@ -118,6 +119,7 @@ a:active {
     font-size: 18px;
     padding: 8px;
     margin-bottom: 10px;
+    border-radius: 2px;
 }
 .modalSection {
     margin-top: 10px;
@@ -127,11 +129,23 @@ a:active {
 }
 .listbox {
     background-color: white;
-    height: 150px;
+    height: 120px;
     overflow-y: scroll;
 }
 .listbox ul {
     list-style-type: none;
     margin: 0;
     padding: 0;
+    font-size: 24px;
+}
+.listbox ul li input {
+    height: 20px;
+    width: 20px;
+}
+.modalSection input {
+    height: 20px;
+    width: 20px;
+}
+#numGuesses {
+    font-size: 18px;
 }

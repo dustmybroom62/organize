@@ -69,6 +69,7 @@ function loadSettings() {
     for (let i = ul.children.length; i > 0 ; i--) {
         ul.children[i - 1].remove();
     }
+    settings.wordLengths.sort((a, b) => b - a);
     for (let i = 0; i < settings.wordLengths.length; i++) {
         let val = settings.wordLengths[i];
         let selected = settings.wordLensSelected[i];
