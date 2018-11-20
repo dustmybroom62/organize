@@ -54,6 +54,9 @@ body {
 .tilePts {
     font-size: 10px;
 }
+#numTiles {
+    font-size: 24px;
+}
 #infoDiv {
     font-family: Verdana, Geneva, Tahoma, sans-serif; /* 'Courier New', Courier, monospace; */
 }
