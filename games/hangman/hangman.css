@@ -47,6 +47,7 @@ a:active {
     font-size: 24px;
     background-color: #50aaff;
     text-align: center;
+    border-radius: 4px;
 }
 .noFloat {
     float: none !important;

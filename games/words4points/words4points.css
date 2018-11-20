@@ -29,6 +29,7 @@ body {
     margin-bottom: 10px;
     text-align: left;
     font-family: Verdana, Geneva, Tahoma, sans-serif; /* 'Courier New', Courier, monospace; */
+    border-radius: 4px;
 }
 .noFloat {
     float: none !important;
