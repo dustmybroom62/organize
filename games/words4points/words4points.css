@@ -126,4 +126,5 @@ body {
 }
 #tilesDiv {
     clear: both;
+    height: 48px;
 }
