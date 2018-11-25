@@ -1,0 +1,151 @@
+body {
+    font-family: Verdana, Geneva, Tahoma, sans-serif; /* 'Courier New', Courier, monospace; */
+    background-color: black;
+}
+.text {
+    height: 30px;
+    width: 30px;
+    padding: 4px;
+    font-size: 24px;
+    color: white;
+}
+.text a {
+    font-size: 24px;
+}
+a:link {
+    text-decoration: none;
+    color: inherit;
+}
+a:hover {
+    text-decoration: none;
+}
+a:visited {
+    text-decoration: none;
+    color: inherit;
+}
+a:active {
+    text-decoration: none;
+    color: inherit;
+}
+.letter {
+    float: left;
+    border: 1px solid black;
+    /*border-color: black;*/
+    margin: 4px;
+    text-align: center;
+    font-family: Verdana, Geneva, Tahoma, sans-serif; /* 'Courier New', Courier, monospace; */
+}
+.word {
+    background-color: beige;
+    color: black;
+    display: none;
+}
+.msg {
+    height: 30px;
+    width: 510px;
+    padding: 4px;
+    font-size: 24px;
+    background-color: #50aaff;
+    text-align: center;
+    border-radius: 4px;
+}
+.noFloat {
+    float: none !important;
+}
+.btn {
+    padding: 4px;
+    font-size: 24px;
+}
+.btnLetter {
+    height: 40px;
+    width: 40px;
+    padding: 4px;
+    font-size: 24px;
+    font-family: Verdana, Geneva, Tahoma, sans-serif; /* 'Courier New', Courier, monospace; */
+    background-color: #50aaff;
+    margin: 4px;
+}
+.btnBadGuess {
+    text-decoration: line-through;
+}
+.btnDisabled {
+    background-color: white;
+}
+#wordDiv {
+    margin-top: 2px;
+}
+#wordDisplay {
+    height: 50px;
+}
+#qwerty {
+    margin-top: 10px;
+    margin-left: 10px;
+}
+#qwerty2 {
+    margin-left: 20px;
+}
+#qwerty3 {
+    margin-left: 60px;
+}
+.modalBackground {
+    height: 100%;
+    width: 100%;
+    top: 0px;
+    left: 0px;
+    display: none;
+    position: absolute;
+    z-index: 1;
+    background-color: gray;
+    opacity: 0.6;
+}
+.modal {
+    height: 284px;
+    width: 360px;
+    top: 10px;
+    left: 10px;
+    background-color: beige; /* wheat; */
+    display: none;
+    position: absolute;
+    z-index: 2;
+    opacity: 1;
+    font-family: Verdana, Geneva, Tahoma, sans-serif; /* 'Courier New', Courier, monospace; */
+    font-size: 18px;
+    padding: 6px;
+    border-radius: 2px;
+}
+.modalTitle {
+    background-color: #50aaff; /* coral;*/
+    font-weight: bold;
+    font-size: 18px;
+    padding: 8px;
+    margin-bottom: 10px;
+    border-radius: 2px;
+}
+.modalSection {
+    margin-top: 10px;
+}
+.modalBtns {
+    float: right;
+}
+.listbox {
+    background-color: white;
+    height: 120px;
+    overflow-y: scroll;
+}
+.listbox ul {
+    list-style-type: none;
+    margin: 0;
+    padding: 0;
+    font-size: 24px;
+}
+.listbox ul li input {
+    height: 20px;
+    width: 20px;
+}
+.modalSection input {
+    height: 20px;
+    width: 20px;
+}
+#numGuesses {
+    font-size: 18px;
+}

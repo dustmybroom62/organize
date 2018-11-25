@@ -1,0 +1,131 @@
+body {
+    background-color: black;
+}
+.text {
+    height: 30px;
+    width: 30px;
+    padding: 4px;
+    font-size: 24px;
+    font-family: Verdana, Geneva, Tahoma, sans-serif; /* 'Courier New', Courier, monospace; */
+    color: white
+}
+.letter {
+    float: left;
+    border: 2px;
+    border-color: black;
+    margin: 4px;
+    text-align: center;
+    font-family: Verdana, Geneva, Tahoma, sans-serif; /* 'Courier New', Courier, monospace; */
+}
+.word {
+    background-color: beige;
+    display: none;
+}
+.msg {
+    height: 40px;
+    padding: 4px;
+    font-size: 24px;
+    background-color: #50aaff;
+    margin-bottom: 10px;
+    text-align: left;
+    font-family: Verdana, Geneva, Tahoma, sans-serif; /* 'Courier New', Courier, monospace; */
+    border-radius: 4px;
+}
+.noFloat {
+    float: none !important;
+}
+.btn {
+    padding: 4px;
+    font-size: 24px;
+}
+.btnDisabled {
+    background-color: white;
+    text-decoration: line-through;
+}
+.btnLetter {
+    height: 40px;
+    width: 40px;
+    padding: 4px;
+    font-family: Verdana, Geneva, Tahoma, sans-serif; /* 'Courier New', Courier, monospace; */
+    margin: 4px;
+}
+.tileChr {
+    font-size: 24px;
+}
+.tilePts {
+    font-size: 10px;
+}
+#numTiles {
+    font-size: 24px;
+}
+#infoDiv {
+    font-family: Verdana, Geneva, Tahoma, sans-serif; /* 'Courier New', Courier, monospace; */
+}
+#board {
+    margin-left: 10px;
+    margin-right: 10px;
+    align-items: center;
+}
+.modalBackground {
+    height: 100%;
+    width: 100%;
+    top: 0px;
+    left: 0px;
+    display: none;
+    position: absolute;
+    z-index: 1;
+    background-color: gray;
+    opacity: 0.6;
+}
+.modal {
+    height: 284px;
+    width: 360px;
+    top: 10px;
+    left: 10px;
+    background-color: wheat;
+    display: none;
+    position: absolute;
+    z-index: 2;
+    opacity: 1;
+    font-family: 'Courier New', Courier, monospace;
+    font-size: 18px;
+    padding: 6px;
+}
+.modalTitle {
+    background-color: coral;
+    font-weight: bold;
+    font-size: 18px;
+    padding: 8px;
+    margin-bottom: 10px;
+}
+.modalSection {
+    margin-top: 10px;
+}
+.modalBtns {
+    float: right;
+}
+.listbox {
+    background-color: white;
+    height: 120px;
+    overflow-y: scroll;
+}
+.listbox table {
+    font-size: 20px;
+}
+.legend {
+    margin-top: 0;
+    font-size: 14px;
+    color: white;
+}
+.buttonBar {
+    float: left;
+}
+#msgDiv {
+    float: left;
+    width: 450px;
+    clear: both;
+}
+#tilesDiv {
+    clear: both;
+    height: 48px;
+}

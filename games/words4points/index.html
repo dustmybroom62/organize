@@ -1,0 +1,126 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Words 4 Points</title>
+    <link rel="stylesheet" href="./words4points.css" />
+    <script src="../resources/words.js"></script>
+    <script src="./words4points.js"></script>
+    <script>
+        //var x = {1: [1, 2], 2: [2, 3]};
+        //alert(x[0]);
+
+        //for (p in x)
+        //    alert(p);
+
+        function loadWords(){
+            console.log("Loading word list from file...");
+            var wordList = words.split(' ');
+            console.log(wordList.length + " words loaded.");
+            var result = {low: 1, high: 0, lists: {}};
+            for (var i = 0; i < wordList.length; i++) {
+                w = wordList[i];
+                n = w.length;
+                if (n > result.high) {
+                    result.high = n;
+                }
+                list = result.lists[n];
+                if (!list) {
+                    result.lists[n] = [];
+                    list = result.lists[n];
+                }
+                list.push(w);
+            }
+            return result;
+        }
+
+        // var words = loadWords();
+        // var n = words.high - 3;
+        // list =  words.lists[n];
+        // w = Math.trunc(Math.random() * list.length);
+        // alert(n + '  ' + list[w] + '  ' + w + '/' + list.length);
+
+
+
+    </script>
+</head>
+<body>
+    <div id="topDiv">
+        <button class="btn" id="btnStart" onclick="startGame()">New&nbsp;Game</button>&nbsp;
+        <button class="btn" id="btnReplay" onclick="replayHand()" disabled="true">Replay</button>
+        <span class="text">&nbsp;Number of Tiles:&nbsp;</span>
+        <select id="numTiles">
+            <option value="7">7</option>
+            <option value="8">8</option>
+            <option value="9">9</option>
+            <option value="10">10</option>
+        </select>
+    </div>
+    <div id="infoDiv">
+        <table style="width: 100%;">
+            <tr>
+                <td>
+                    <ul class="legend">
+                        <li>1 point: E, A, I, O, N, R, T, L, S, U</li>
+                        <li>2 points: D, G</li>
+                        <li>3 points: B, C, M, P</li>
+                        <li>4 points: F, H, V, W, Y</li>
+                        <li>5 points: K</li>
+                        <li>8 points: J, X</li>
+                        <li>10 points: Q, Z</li>
+                    </ul>   
+                </td>
+                <td width="*">
+                    <div style="width: 100%; margin-left: 10px;">
+                        <div class="listbox">
+                            <table id="wordsTable" width="100%">
+                                <thead>
+                                    <tr><th width="*" style="text-align: left;">Word</th><th width="25%" style="text-align: right;">Points</th></tr>
+                                </thead>
+                                <tbody id="wordScores">
+                                    <tr><td>ABCDEFGHIJKLMNOP</td><td style="text-align: right;">25</td></tr>
+                                </tbody>
+                            </table>
+                        </div>
+                        <div style="float: right;">
+                            <span class="text">Total Points:&nbsp;</span><span id="totalPointsUI" class="text">0</span>
+                        </div>
+                    </div>
+                </td>
+            </tr>
+        </table>
+    </div>
+    <div id="board">
+        <div id="tilesDiv" style="float: left;">
+            <button class="btnLetter" onclick="playTileUI(this)"><span class="tileChr">Q</span><span class="tilePts">10</span></button>
+            <button class="btnLetter" onclick="playTileUI(this)"><span class="tileChr">W</span><span class="tilePts">4</span></button>
+            <button class="btnLetter" onclick="playTileUI(this)"><span class="tileChr">E</span><span class="tilePts">1</span></button>
+            <button class="btnLetter" onclick="playTileUI(this)"><span class="tileChr">R</span><span class="tilePts">1</span></button>
+            <button class="btnLetter" onclick="playTileUI(this)"><span class="tileChr">T</span><span class="tilePts">1</span></button>
+            <button class="btnLetter" onclick="playTileUI(this)"><span class="tileChr">Y</span><span class="tilePts">4</span></button>
+            <button class="btnLetter" onclick="playTileUI(this)"><span class="tileChr">U</span><span class="tilePts">1</span></button>
+            <button class="btnLetter" onclick="playTileUI(this)"><span class="tileChr">I</span><span class="tilePts">1</span></button>
+            <button class="btnLetter" onclick="playTileUI(this)"><span class="tileChr">O</span><span class="tilePts">1</span></button>
+            <button class="btnLetter" onclick="playTileUI(this)"><span class="tileChr">P</span><span class="tilePts">3</span></button>
+        </div>
+        <div style="float: right;">
+            <button id="btnHint" title="Get Suggestion from AI" onclick="getHint()" class="btnLetter">
+                <span class="tileChr">&quest;</span>
+            </button>
+        </div>
+        <div>
+            <div id="msgDiv" class="msg">
+                <label id="msg"></label>
+            </div>
+            <div class="buttonBar">
+                <button id="btnCancel" title="Cancel Word in Progress" onclick="cancelWord()" class="btnLetter"><span class="tileChr">&cross;</span></button>
+                <button id="btnAccept" title="Accept Word in Progress" onclick="acceptWord()" class="btnLetter"><span class="tileChr">&checkmark;</span></button>
+            </div>
+        </div>
+    </div>
+<script>
+    initUI();
+</script>
+</body>
+</html>
