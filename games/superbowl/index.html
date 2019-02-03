@@ -1,0 +1,105 @@
+<html>
+
+<head>
+    <script src="superbowl.data.js"></script>
+    <style>
+        body {
+            font-family: sans-serif;
+        }
+        li {
+            list-style: none;
+            padding-bottom: 10px;
+        }
+        td {
+            padding: 6px;
+            width: 30%;
+        }
+        table {
+            width: 100%;
+        }
+        th {
+            text-align: left;
+        }
+    </style>
+</head>
+
+<body>
+    <ul>
+        <li>
+            <label for="AFC">Last digit for AFC: </label>
+            <input type="number" name="AFC" id="AFC" size="1" min="0" max="9" />
+        </li>
+        <li>
+            <label for="NFC">Last digit for NFC: </label>
+            <input type="number" name="NFC" id="NFC" size="1" min="0" max="9" />
+        </li>
+        <li>
+            <button onclick="update()">Update</button>
+        </li>
+        <li>
+            <label for="winner3">Sheet 3 Winner</label>
+            <input type="text" readonly="readonly" name="winner3" id="winner3" size="20" />
+        </li>
+        <li>
+            <label for="winner3">Sheet 6 Winner</label>
+            <input type="text" readonly="readonly" name="winner6" id="winner6" size="20" />
+        </li>
+    </ul>
+    <table>
+        <thead>
+            <tr>
+                <th></th>
+                <th>Sheet 3</th>
+                <th>Sheet 6</th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr>
+                <td><button onclick="copyQtr(1)">Copy Qtr 1</button></td>
+                <td><span id="q1s3"></span></td>
+                <td><span id="q1s6"></span></td>
+            </tr>
+            <tr>
+                <td><button onclick="copyQtr(2)">Copy Qtr 2</button></td>
+                <td><span id="q2s3"></span></td>
+                <td><span id="q2s6"></span></td>
+            </tr>
+            <tr>
+                <td><button onclick="copyQtr(3)">Copy Qtr 3</button></td>
+                <td><span id="q3s3"></span></td>
+                <td><span id="q3s6"></span></td>
+            </tr>
+            <tr>
+                <td><button onclick="copyQtr(4)">Copy Qtr 4</button></td>
+                <td><span id="q4s3"></span></td>
+                <td><span id="q4s6"></span></td>
+            </tr>
+        </tbody>
+    </table>
+    <script>
+        function copyQtr(qtr) {
+            let spanS3 = document.querySelector(`#q${qtr}s3`);
+            let spanS6 = document.querySelector(`#q${qtr}s6`);
+            spanS3.innerHTML = txtWinner3.value;
+            spanS6.innerHTML = txtWinner6.value;
+        }
+
+        function update() {
+
+            let afcVal = +txtAFC.value;
+            let nfcVal = +txtNFC.value;
+
+            let box3 = boxes["$3"].filter((b) => { return b.AFC === afcVal && b.NFC === nfcVal; });
+            let box6 = boxes["$6"].filter((b) => { return b.AFC === afcVal && b.NFC === nfcVal; });
+
+            txtWinner3.value = box3[0].name;
+            txtWinner6.value = box6[0].name;
+        }
+        const txtWinner3 = document.querySelector("#winner3");
+        const txtWinner6 = document.querySelector("#winner6");
+        const txtAFC = document.querySelector("#AFC");
+        const txtNFC = document.querySelector("#NFC");
+    </script>
+</body>
+
+</html>
