@@ -13,7 +13,7 @@
         }
         td {
             padding: 6px;
-            width: 30%;
+            width: 20%;
         }
         table {
             width: 100%;
@@ -50,6 +50,8 @@
         <thead>
             <tr>
                 <th></th>
+                <th>AFC</th>
+                <th>NFC</th>
                 <th>Sheet 3</th>
                 <th>Sheet 6</th>
             </tr>
@@ -57,21 +59,29 @@
         <tbody>
             <tr>
                 <td><button onclick="copyQtr(1)">Copy Qtr 1</button></td>
+                <td><span id="q1afc"></span></td>
+                <td><span id="q1nfc"></span></td>
                 <td><span id="q1s3"></span></td>
                 <td><span id="q1s6"></span></td>
             </tr>
             <tr>
                 <td><button onclick="copyQtr(2)">Copy Qtr 2</button></td>
+                <td><span id="q2afc"></span></td>
+                <td><span id="q2nfc"></span></td>
                 <td><span id="q2s3"></span></td>
                 <td><span id="q2s6"></span></td>
             </tr>
             <tr>
                 <td><button onclick="copyQtr(3)">Copy Qtr 3</button></td>
+                <td><span id="q3afc"></span></td>
+                <td><span id="q3nfc"></span></td>
                 <td><span id="q3s3"></span></td>
                 <td><span id="q3s6"></span></td>
             </tr>
             <tr>
                 <td><button onclick="copyQtr(4)">Copy Qtr 4</button></td>
+                <td><span id="q4afc"></span></td>
+                <td><span id="q4nfc"></span></td>
                 <td><span id="q4s3"></span></td>
                 <td><span id="q4s6"></span></td>
             </tr>
@@ -81,8 +91,12 @@
         function copyQtr(qtr) {
             let spanS3 = document.querySelector(`#q${qtr}s3`);
             let spanS6 = document.querySelector(`#q${qtr}s6`);
+            let spanAfc = document.querySelector(`#q${qtr}afc`);
+            let spanNfc = document.querySelector(`#q${qtr}nfc`);
             spanS3.innerHTML = txtWinner3.value;
             spanS6.innerHTML = txtWinner6.value;
+            spanAfc.innerHTML = txtAFC.value;
+            spanNfc.innerHTML = txtNFC.value;
         }
 
         function update() {
