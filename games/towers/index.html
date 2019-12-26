@@ -7,39 +7,99 @@
             font-size: 24px;
             font-family: Arial, Helvetica, sans-serif;
         }
-        .hidden { display: none; }
-        .visible { display: block; }
+
+        .hidden {
+            display: none;
+        }
+
+        .visible {
+            display: block;
+        }
+
+        .controls-container {
+            display: flex;
+            flex-direction: row;
+            justify-content: space-around;
+            width: 100%;
+        }
+
+        .svg-container {
+            display: flex;
+            /* width: 600px; */
+        }
+
+        .svg {
+            width: 100%;
+        }
+
+        .main-container {
+            display: flex;
+            flex-direction: column;
+            justify-items: center;
+            max-width: 612px;
+            padding: 10px 0 0 0;
+        }
+
+        @media only screen and (max-width: 600px) {
+            .main-container {
+                max-width: 100%;
+            }            
+        }
     </style>
 </head>
 
 <body>
-    <div>
-        <label class="game-controls">Rings: </label class="game-controls">
-        <input id="txtRings" class="game-controls" type="number" min="3" max="7" value="7" />
-        <button class="game-controls" onclick="onNewGame(document.all.txtRings.value)">New Game</button class="game-controls">
+    <div class="main-container">
+        <div class="controls-container">
+            <div>
+                <label class="game-controls">Rings: </label class="game-controls">
+                <input id="txtRings" class="game-controls" type="number" min="3" max="7" value="7" />
+            </div>
+            <div>
+                <button class="game-controls"
+                    onclick="onNewGame(document.all.txtRings.value, document.all.txtSpeed.value)">
+                    New Game
+                </button class="game-controls">
+            </div>
+            <div>
+                <label class="game-controls"> Animation Speed: </label>
+                <input id="txtSpeed" class="game-controls" type="number" min="1" max="10" value="1" />
+            </div>
+        </div>
+
+        <div class="svg-container">
+            <svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" class="svg"
+                viewBox="0 0 600 200" preserveAspectRatio="xMidYMid meet">
+                <rect id="svgEditorBackground" x="0" y="0" width="600" height="200" fill="none" stroke="black" />
+                <rect id="post_0" x="144" y="40" fill="brown" width="12" height="160" />
+                <rect id="base_0" x="100" y="190" fill="brown" width="100" height="10" />
+                <rect id="post_1" x="294" y="40" fill="brown" width="12" height="160" />
+                <rect id="base_1" x="250" y="190" fill="brown" width="100" height="10" />
+                <rect id="post_2" x="444" y="40" fill="brown" width="12" height="160" />
+                <rect id="base_2" x="400" y="190" fill="brown" width="100" height="10" />
+                <rect id="ring_0" x="-20" y="0" class="visible" transform="translate(150 50)" fill="deeppink" width="40"
+                    height="20" rx="50%" ry="50%" />
+                <rect id="ring_1" x="-26" y="0" class="visible" transform="translate(150 70)" fill="green" width="52"
+                    height="20" rx="50%" ry="50%" />
+                <rect id="ring_2" x="-32" y="0" class="visible" transform="translate(150 90)" fill="blue" width="64"
+                    height="20" rx="50%" ry="50%" />
+                <rect id="ring_3" x="-38" y="0" class="visible" transform="translate(150 110)" fill="orange" width="76"
+                    height="20" rx="50%" ry="50%" />
+                <rect id="ring_4" x="-44" y="0" class="visible" transform="translate(150 130)" fill="purple" width="88"
+                    height="20" rx="50%" ry="50%" />
+                <rect id="ring_5" x="-50" y="0" class="visible" transform="translate(150 150)" fill="aqua" width="100"
+                    height="20" rx="50%" ry="50%" />
+                <rect id="ring_6" x="-56" y="0" class="visible" transform="translate(150 170)" fill="red" width="112"
+                    height="20" rx="50%" ry="50%" />
+                <rect id="hotspot_0" width="150" height="100%" x="75" y="0" fill="transparent"
+                    onclick="onHotClick(0)" />
+                <rect id="hotspot_1" width="150" height="100%" x="225" y="0" fill="transparent"
+                    onclick="onHotClick(1)" />
+                <rect id="hotspot_2" width="150" height="100%" x="375" y="0" fill="transparent"
+                    onclick="onHotClick(2)" />
+            </svg>
+        </div>
     </div>
-
-    <svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" width="600px" height="200px"
-        viewBox="0 0 600 200" preserveAspectRatio="xMidYMid meet">
-        <rect id="svgEditorBackground" x="0" y="0" width="600" height="200" fill="none" stroke="black" />
-        <rect id="post_0" x="144" y="40" fill="brown" width="12" height="160" />
-        <rect id="base_0" x="100" y="190" fill="brown" width="100" height="10" />
-        <rect id="post_1" x="294" y="40" fill="brown" width="12" height="160" />
-        <rect id="base_1" x="250" y="190" fill="brown" width="100" height="10" />
-        <rect id="post_2" x="444" y="40" fill="brown" width="12" height="160" />
-        <rect id="base_2" x="400" y="190" fill="brown" width="100" height="10" />
-        <rect id="ring_0" x="-20" y="0" class="visible" transform="translate(150 50)" fill="deeppink" width="40" height="20" rx="50%" ry="50%" />
-        <rect id="ring_1" x="-26" y="0" class="visible" transform="translate(150 70)" fill="green" width="52" height="20" rx="50%" ry="50%" />
-        <rect id="ring_2" x="-32" y="0" class="visible" transform="translate(150 90)" fill="blue" width="64" height="20" rx="50%" ry="50%" />
-        <rect id="ring_3" x="-38" y="0" class="visible" transform="translate(150 110)" fill="orange" width="76" height="20" rx="50%" ry="50%" />
-        <rect id="ring_4" x="-44" y="0" class="visible" transform="translate(150 130)" fill="purple" width="88" height="20" rx="50%" ry="50%" />
-        <rect id="ring_5" x="-50" y="0" class="visible" transform="translate(150 150)" fill="aqua" width="100" height="20" rx="50%" ry="50%" />
-        <rect id="ring_6" x="-56" y="0" class="visible" transform="translate(150 170)" fill="red" width="112" height="20" rx="50%" ry="50%" />
-        <rect id="hotspot_0" width="150" height="100%" x="75" y="0" fill="transparent" onclick="onHotClick(0)" />
-        <rect id="hotspot_1" width="150" height="100%" x="225" y="0" fill="transparent" onclick="onHotClick(1)" />
-        <rect id="hotspot_2" width="150" height="100%" x="375" y="0" fill="transparent" onclick="onHotClick(2)" />
-    </svg>
-
 </body>
 
 <script>
@@ -53,20 +113,59 @@
         this.tx = tx;
         this.ty = ty;
         this.visible = visible;
+        this.dest = { x: -1, y: -1 };
+        this.animSpeed = 1;
+        this.isAnimating = false;
+
         this.element = document.querySelector('#ring_' + value);
         if (!!this.element) {
             this.element.setAttribute('class', this.visible ? 'visible' : 'hidden');
         }
 
-        this.transform = function() {
+        this.move = function (dest, speed) {
+            if (this.isAnimating) { return false; }
+            this.dest = dest;
+            this.animSpeed = speed;
+            this.animate();
+        };
+
+        this.animate = function () {
+            if (this.dest.x > this.tx) {
+                this.isAnimating = true;
+                this.tx = Math.min(this.tx + this.animSpeed, this.dest.x);
+                this.transform();
+                requestAnimationFrame(this.animate.bind(this));
+            } else if (this.dest.x < this.tx) {
+                this.isAnimating = true;
+                this.tx = Math.max(this.tx - this.animSpeed, this.dest.x);
+                this.transform();
+                requestAnimationFrame(this.animate.bind(this));
+            }
+            else if (this.dest.y > this.ty) {
+                this.isAnimating = true;
+                this.ty = Math.min(this.ty + this.animSpeed, this.dest.y);
+                this.transform();
+                requestAnimationFrame(this.animate.bind(this));
+            } else if (this.dest.y < this.ty) {
+                this.isAnimating = true;
+                this.ty = Math.max(this.ty - this.animSpeed, this.dest.y);
+                this.transform();
+                requestAnimationFrame(this.animate.bind(this));
+            } else {
+                this.isAnimating = false;
+            }
+
+        };
+
+        this.transform = function () {
             this.element.attributes['transform'].value = 'translate(' + this.tx + ',' + this.ty + ')';
-        }
+        };
         this.transform();
 
-        this.select = function(ty) {
-            this.ty = ty - this.height - 10;
-            this.transform();
-        }
+        this.select = function (ty, speed) {
+            if (this.isAnimating) { return false; }
+            this.move({ x: this.tx, y: ty - this.height - 10 }, 2 * speed);
+        };
     }
     function post(x, yTop, yBottom) {
         this.x = x;
@@ -74,15 +173,16 @@
         this.yBottom = yBottom;
         this.rings = [];
     }
-    function game(rings) {
+    function game(rings, speed) {
         this.rings = +rings;
         this.inProgress = false;
         this.posts = [];
         this.source = -1;
         this.dest = -1;
         this.selected = null;
+        this.animSpeed = +speed || 1;
 
-        this.init = function() {
+        this.init = function () {
             this.inProgress = true;
             for (let i = 0; i < 3; i++) {
                 this.posts.push(new post(150 + (i * 150), 40, 190));
@@ -91,7 +191,7 @@
             const ringHeight = 20;
             for (let i = 0; i < 7; i++) {
                 startPost.rings.push(new ring(
-                    i, -20 - (i * 6), 0, null, 40 + (i * 12), ringHeight, startPost.x, 50 + (i * ringHeight), (i < rings) )
+                    i, -20 - (i * 6), 0, null, 40 + (i * 12), ringHeight, startPost.x, 50 + (i * ringHeight), (i < rings))
                 );
             }
             const post0 = this.posts[0];
@@ -107,43 +207,42 @@
     }
     var theGame = null;
 
-function onHotClick(idx) {
-    const g = theGame;
-    if (!g || !g.inProgress) { return; }
-    if (!!g.selected) {
-        g.dest = idx;
-        const post = g.posts[idx];
-        const temp = post.rings.pop();
-        if (!temp || g.selected.value < temp.value) {
-            // put back temp and put selected on top
-            if (!!temp) { post.rings.push(temp); }
-            post.rings.push(g.selected);
-            g.selected.tx = post.x;
-            g.selected.ty = post.yBottom - (g.selected.height * post.rings.length);
-            g.selected.transform();
-            g.selected = null;
-            g.source = g.dest = -1;
-            if (idx === 2 && post.rings.length === g.rings) { g.inProgress = false; }
-        } else {
-            if (!!temp) {
-                post.rings.push(temp);
+    function onHotClick(idx) {
+        const g = theGame;
+        if (!g || !g.inProgress) { return; }
+        if (!!g.selected) {
+            if (g.selected.isAnimating) { return; }
+            g.dest = idx;
+            const post = g.posts[idx];
+            const temp = post.rings.pop();
+            if (!temp || g.selected.value < temp.value) {
+                // put back temp and put selected on top
+                if (!!temp) { post.rings.push(temp); }
+                post.rings.push(g.selected);
+                g.selected.move({ x: post.x, y: post.yBottom - (g.selected.height * post.rings.length) }, g.animSpeed);
+                g.selected = null;
+                g.source = g.dest = -1;
+                if (idx !== 0 && post.rings.length === g.rings) { g.inProgress = false; }
+            } else {
+                if (!!temp) {
+                    post.rings.push(temp);
+                }
+                g.dest = -1;
             }
-            g.dest = -1;
+        } else {
+            const post = g.posts[idx];
+            const ring = post.rings.pop();
+            if (!ring) { return; }
+            g.source = idx;
+            g.selected = ring;
+            ring.select(post.yTop, g.animSpeed);
         }
-    } else {
-        const post = g.posts[idx];
-        const ring = post.rings.pop();
-        if (!ring) { return; }
-        g.source = idx;
-        ring.select(post.yTop);
-        g.selected = ring;
     }
-}
 
-function onNewGame(rings) {
-    theGame = new game(+rings);
-    theGame.init();
-}
+    function onNewGame(rings, speed) {
+        theGame = new game(+rings, +speed);
+        theGame.init();
+    }
 
 </script>
 
