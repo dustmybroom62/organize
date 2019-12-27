@@ -8,6 +8,18 @@
             font-family: Arial, Helvetica, sans-serif;
         }
 
+        .start {
+            background-color: initial;
+        }
+
+        .loser {
+            background-color: pink;
+        }
+
+        .winner {
+            background-color: rgb(29, 201, 29);
+        }
+
         .hidden {
             display: none;
         }
@@ -99,6 +111,16 @@
                     onclick="onHotClick(2)" />
             </svg>
         </div>
+        <div class="controls-container">
+            <div>
+                <label class="game-controls">Player Moves: </label>
+                <label id="txtMovesPlayer" class="game-controls start">0</label>
+            </div>
+            <div>
+                <label class="game-controls">Minimum Moves: </label>
+                <label id="txtMovesMin" class="game-controls">0</label>
+            </div>
+        </div>
     </div>
 </body>
 
@@ -181,8 +203,11 @@
         this.dest = -1;
         this.selected = null;
         this.animSpeed = +speed || 1;
+        this.moveCount = 0;
+        this.moveMin = (2 ** this.rings) - 1;
 
         this.init = function () {
+            showMoves(this.moveCount, this.moveMin);
             this.inProgress = true;
             for (let i = 0; i < 3; i++) {
                 this.posts.push(new post(150 + (i * 150), 40, 190));
@@ -207,6 +232,28 @@
     }
     var theGame = null;
 
+    function showMoves(player, min) {
+        const g = theGame;
+        if (!g) { return; }
+        let color = 'start';
+        if (0 !== player && player >= min) {
+            if (g.inProgress) {
+                color = 'loser';
+            } else {
+                if (player === min) { color = 'winner'; }
+                else { color = 'loser'; }
+            }
+        }
+        const elMp = document.querySelector('#txtMovesPlayer');
+        if (!!elMp) {
+            elMp.innerText = player;
+            elMp.classList.remove( elMp.classList.item(elMp.classList.length - 1) );
+            elMp.classList.add(color);
+        }
+        const elMm = document.querySelector('#txtMovesMin');
+        if (!!elMm) { elMm.innerText = min; }
+    }
+
     function onHotClick(idx) {
         const g = theGame;
         if (!g || !g.inProgress) { return; }
@@ -219,10 +266,14 @@
                 // put back temp and put selected on top
                 if (!!temp) { post.rings.push(temp); }
                 post.rings.push(g.selected);
+                if (g.source !== g.dest) {
+                    g.moveCount++;
+                }
                 g.selected.move({ x: post.x, y: post.yBottom - (g.selected.height * post.rings.length) }, g.animSpeed);
                 g.selected = null;
                 g.source = g.dest = -1;
                 if (idx !== 0 && post.rings.length === g.rings) { g.inProgress = false; }
+                showMoves(g.moveCount, g.moveMin);
             } else {
                 if (!!temp) {
                     post.rings.push(temp);
