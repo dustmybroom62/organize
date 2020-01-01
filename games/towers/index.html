@@ -52,6 +52,12 @@
             padding: 10px 0 0 0;
         }
 
+        .disc-label {
+            font-family: Arial, Helvetica, sans-serif;
+            fill: white;
+            stroke: white;
+        }
+
         @media only screen and (max-width: 600px) {
             .main-container {
                 max-width: 100%;
@@ -65,7 +71,7 @@
         <div class="controls-container">
             <div>
                 <label class="game-controls">Rings: </label class="game-controls">
-                <input id="txtRings" class="game-controls" type="number" min="3" max="7" value="7" />
+                <input id="txtRings" class="game-controls" type="number" min="3" max="9" value="9" />
             </div>
             <div>
                 <button class="game-controls"
@@ -81,34 +87,65 @@
 
         <div class="svg-container">
             <svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" class="svg"
-                viewBox="0 0 600 200" preserveAspectRatio="xMidYMid meet">
-                <rect id="svgEditorBackground" x="0" y="0" width="600" height="200" fill="none" stroke="black" />
-                <rect id="post_0" x="144" y="40" fill="brown" width="12" height="160" />
-                <rect id="base_0" x="100" y="190" fill="brown" width="100" height="10" />
-                <rect id="post_1" x="294" y="40" fill="brown" width="12" height="160" />
-                <rect id="base_1" x="250" y="190" fill="brown" width="100" height="10" />
-                <rect id="post_2" x="444" y="40" fill="brown" width="12" height="160" />
-                <rect id="base_2" x="400" y="190" fill="brown" width="100" height="10" />
-                <rect id="ring_0" x="-20" y="0" class="visible" transform="translate(150 50)" fill="deeppink" width="40"
-                    height="20" rx="50%" ry="50%" />
-                <rect id="ring_1" x="-26" y="0" class="visible" transform="translate(150 70)" fill="green" width="52"
-                    height="20" rx="50%" ry="50%" />
-                <rect id="ring_2" x="-32" y="0" class="visible" transform="translate(150 90)" fill="blue" width="64"
-                    height="20" rx="50%" ry="50%" />
-                <rect id="ring_3" x="-38" y="0" class="visible" transform="translate(150 110)" fill="orange" width="76"
-                    height="20" rx="50%" ry="50%" />
-                <rect id="ring_4" x="-44" y="0" class="visible" transform="translate(150 130)" fill="purple" width="88"
-                    height="20" rx="50%" ry="50%" />
-                <rect id="ring_5" x="-50" y="0" class="visible" transform="translate(150 150)" fill="aqua" width="100"
-                    height="20" rx="50%" ry="50%" />
-                <rect id="ring_6" x="-56" y="0" class="visible" transform="translate(150 170)" fill="red" width="112"
-                    height="20" rx="50%" ry="50%" />
-                <rect id="hotspot_0" width="150" height="100%" x="75" y="0" fill="transparent"
-                    onclick="onHotClick(0)" />
-                <rect id="hotspot_1" width="150" height="100%" x="225" y="0" fill="transparent"
-                    onclick="onHotClick(1)" />
-                <rect id="hotspot_2" width="150" height="100%" x="375" y="0" fill="transparent"
-                    onclick="onHotClick(2)" />
+                viewBox="0 0 600 240" preserveAspectRatio="xMidYMid meet">
+                <rect id="svgEditorBackground" x="0" y="0" width="600" height="240" fill="none" stroke="black" />
+                <rect id="post_0" x="-6" y="-10" fill="brown" width="12" height="200" transform="translate(100 50)" />
+                <rect id="base_0" x="-90" y="-10" fill="brown" width="180" height="10" transform="translate(100 240)" />
+                <rect id="post_1" x="-6" y="-10" fill="brown" width="12" height="200" transform="translate(300 50)" />
+                <rect id="base_1" x="-90" y="-10" fill="brown" width="180" height="10" transform="translate(300 240)" />
+                <rect id="post_2" x="-6" y="-10" fill="brown" width="12" height="200" transform="translate(500 50)" />
+                <rect id="base_2" x="-90" y="-10" fill="brown" width="180" height="10" transform="translate(500 240)" />
+                <g id="g_ring_0" class="visible" transform="translate(100 50)">
+                    <rect id="ring_0" x="-24" y="0" fill="red" width="48"
+                        height="20" rx="10" ry="10" />
+                    <text class="disc-label"><tspan y="15" text-anchor="middle">1</tspan></text>
+                </g>
+                <g id="g_ring_1" class="visible" transform="translate(100 70)">
+                    <rect id="ring_1" x="-32" y="0" fill="green" width="64"
+                    height="20" rx="10" ry="10" />
+                    <text class="disc-label"><tspan y="15" text-anchor="middle">2</tspan></text>
+                </g>
+                <g id="g_ring_2" class="visible" transform="translate(100 90)">
+                    <rect id="ring_2" x="-40" y="0" fill="blue" width="80"
+                    height="20" rx="10" ry="10" />
+                    <text class="disc-label"><tspan y="15" text-anchor="middle">3</tspan></text>
+                </g>
+                <g id="g_ring_3" class="visible" transform="translate(100 110)">
+                    <rect id="ring_3" x="-48" y="0" fill="orange" width="96"
+                    height="20" rx="10" ry="10" />
+                    <text class="disc-label"><tspan y="15" text-anchor="middle">4</tspan></text>
+                </g>
+                <g id="g_ring_4" class="visible" transform="translate(100 130)">
+                    <rect id="ring_4" x="-56" y="0" fill="red" width="112"
+                    height="20" rx="10" ry="10" />
+                    <text class="disc-label"><tspan y="15" text-anchor="middle">5</tspan></text>
+                </g>
+                <g id="g_ring_5" class="visible" transform="translate(100 150)">
+                    <rect id="ring_5" x="-64" y="0" fill="green" width="128"
+                    height="20" rx="10" ry="10" />
+                    <text class="disc-label"><tspan y="15" text-anchor="middle">6</tspan></text>
+                </g>
+                <g id="g_ring_6" class="visible" transform="translate(100 170)">
+                    <rect id="ring_6" x="-72" y="0" fill="blue" width="144"
+                    height="20" rx="10" ry="10" />
+                    <text class="disc-label"><tspan y="15" text-anchor="middle">7</tspan></text>
+                </g>
+                <g id="g_ring_7" class="visible" transform="translate(100 190)">
+                    <rect id="ring_7" x="-80" y="0" fill="orange" width="160"
+                    height="20" rx="10" ry="10" />
+                    <text class="disc-label"><tspan y="15" text-anchor="middle">8</tspan></text>
+                </g>
+                <g id="g_ring_8" class="visible" transform="translate(100 210)">
+                    <rect id="ring_8" x="-88" y="0" fill="purple" width="176"
+                    height="20" rx="10" ry="10" />
+                    <text class="disc-label"><tspan y="15" text-anchor="middle">9</tspan></text>
+                </g>
+                <rect id="hotspot_0" width="180" height="100%" x="-90" y="0" transform="translate(100 0)"
+                    fill="transparent" onclick="onHotClick(0)" />
+                <rect id="hotspot_1" width="180" height="100%" x="-90" y="0" transform="translate(300 0)"
+                    fill="transparent" onclick="onHotClick(1)" />
+                <rect id="hotspot_2" width="180" height="100%" x="-90" y="0" transform="translate(450 0)"
+                    fill="transparent" onclick="onHotClick(2)" />
             </svg>
         </div>
         <div class="controls-container">
@@ -139,7 +176,7 @@
         this.animSpeed = 1;
         this.isAnimating = false;
 
-        this.element = document.querySelector('#ring_' + value);
+        this.element = document.querySelector('#g_ring_' + value);
         if (!!this.element) {
             this.element.setAttribute('class', this.visible ? 'visible' : 'hidden');
         }
@@ -210,17 +247,17 @@
             showMoves(this.moveCount, this.moveMin);
             this.inProgress = true;
             for (let i = 0; i < 3; i++) {
-                this.posts.push(new post(150 + (i * 150), 40, 190));
+                this.posts.push(new post(100 + (i * 200), 40, 230));
             }
             const startPost = new post(this.posts[0].x, this.posts[0].yTop, this.posts[0].yBottom);
             const ringHeight = 20;
-            for (let i = 0; i < 7; i++) {
+            for (let i = 0; i < 9; i++) {
                 startPost.rings.push(new ring(
                     i, -20 - (i * 6), 0, null, 40 + (i * 12), ringHeight, startPost.x, 50 + (i * ringHeight), (i < rings))
                 );
             }
             const post0 = this.posts[0];
-            for (let i = 0; i < 7; i++) {
+            for (let i = 0; i < 9; i++) {
                 const ring = startPost.rings.pop();
                 if (ring.value < rings) {
                     post0.rings.push(ring);
