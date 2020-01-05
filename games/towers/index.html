@@ -78,10 +78,15 @@
                     onclick="onNewGame(document.all.txtRings.value, document.all.txtSpeed.value)">
                     New Game
                 </button class="game-controls">
+                <button class="game-controls"
+                    onclick="automate(document.all.txtRings.value, document.all.txtSpeed.value)">
+                    Auto Play
+                </button>
             </div>
             <div>
                 <label class="game-controls"> Animation Speed: </label>
-                <input id="txtSpeed" class="game-controls" type="number" min="1" max="10" value="1" />
+                <input id="txtSpeed" class="game-controls" onchange="onSpeedChange(this.value)"
+                type="number" min="1" max="10" value="1" />
             </div>
         </div>
 
@@ -162,7 +167,8 @@
 </body>
 
 <script>
-    function ring(value, x, y, fill, width, height, tx, ty, visible) {
+    function ring(game, value, x, y, fill, width, height, tx, ty, visible) {
+        this.game = game;
         this.value = value;
         this.x = x;
         this.y = y;
@@ -172,48 +178,66 @@
         this.tx = tx;
         this.ty = ty;
         this.visible = visible;
-        this.dest = { x: -1, y: -1 };
+        // this.dest = { x: -1, y: -1 };
         this.animSpeed = 1;
         this.isAnimating = false;
+        this.path = {};
 
         this.element = document.querySelector('#g_ring_' + value);
         if (!!this.element) {
             this.element.setAttribute('class', this.visible ? 'visible' : 'hidden');
         }
 
-        this.move = function (dest, speed) {
+        this.wait = function() {
+            if (this.isAnimating) { return true; }
+        }
+
+        this.move = function (destPath, callback) {
             if (this.isAnimating) { return false; }
-            this.dest = dest;
-            this.animSpeed = speed;
+            // this.dest = dest;
+            // this.animSpeed = speed;
+            this.path = destPath;
+            this.callback = callback;           
             this.animate();
         };
 
         this.animate = function () {
-            if (this.dest.x > this.tx) {
-                this.isAnimating = true;
-                this.tx = Math.min(this.tx + this.animSpeed, this.dest.x);
-                this.transform();
-                requestAnimationFrame(this.animate.bind(this));
-            } else if (this.dest.x < this.tx) {
-                this.isAnimating = true;
-                this.tx = Math.max(this.tx - this.animSpeed, this.dest.x);
-                this.transform();
-                requestAnimationFrame(this.animate.bind(this));
-            }
-            else if (this.dest.y > this.ty) {
-                this.isAnimating = true;
-                this.ty = Math.min(this.ty + this.animSpeed, this.dest.y);
-                this.transform();
-                requestAnimationFrame(this.animate.bind(this));
-            } else if (this.dest.y < this.ty) {
-                this.isAnimating = true;
-                this.ty = Math.max(this.ty - this.animSpeed, this.dest.y);
-                this.transform();
-                requestAnimationFrame(this.animate.bind(this));
-            } else {
+            const dest = this.path.pop();
+            if (!dest) {
                 this.isAnimating = false;
+                if (this.callback) { this.callback(); }
+                return;
             }
-
+            dest.s = Math.max(dest.s, this.game.animSpeed); 
+            let moved = false;
+            if (!!dest.x || 0 === dest.x) {
+                if (dest.x > this.tx) {
+                    this.isAnimating = true;
+                    this.tx = Math.min(this.tx + dest.s, dest.x);
+                    moved = true;
+                } else if (dest.x < this.tx) {
+                    this.isAnimating = true;
+                    this.tx = Math.max(this.tx - dest.s, dest.x);
+                    moved = true;
+                }
+            }
+            if (!!dest.y || 0 === dest.y) {
+                if (dest.y > this.ty) {
+                    this.isAnimating = true;
+                    this.ty = Math.min(this.ty + dest.s, dest.y);
+                    moved = true;
+                } else if (!!dest.y && dest.y < this.ty) {
+                    this.isAnimating = true;
+                    this.ty = Math.max(this.ty - dest.s, dest.y);
+                    moved = true;
+                }
+            }
+            if (!!moved) {
+                this.path.push(dest);
+                this.isAnimating = true;
+                this.transform();
+            }
+            requestAnimationFrame(this.animate.bind(this));
         };
 
         this.transform = function () {
@@ -223,7 +247,7 @@
 
         this.select = function (ty, speed) {
             if (this.isAnimating) { return false; }
-            this.move({ x: this.tx, y: ty - this.height - 10 }, 2 * speed);
+            this.move([{ y: ty - this.height - 10, s: 2 * speed }]);
         };
     }
     function post(x, yTop, yBottom) {
@@ -252,7 +276,7 @@
             const startPost = new post(this.posts[0].x, this.posts[0].yTop, this.posts[0].yBottom);
             const ringHeight = 20;
             for (let i = 0; i < 9; i++) {
-                startPost.rings.push(new ring(
+                startPost.rings.push(new ring(this,
                     i, -20 - (i * 6), 0, null, 40 + (i * 12), ringHeight, startPost.x, 50 + (i * ringHeight), (i < rings))
                 );
             }
@@ -306,7 +330,11 @@
                 if (g.source !== g.dest) {
                     g.moveCount++;
                 }
-                g.selected.move({ x: post.x, y: post.yBottom - (g.selected.height * post.rings.length) }, g.animSpeed);
+                g.selected.move(
+                    [
+                        { y: post.yBottom - (g.selected.height * post.rings.length), s: g.animSpeed },
+                        { x: post.x, s: g.animSpeed }
+                    ]);
                 g.selected = null;
                 g.source = g.dest = -1;
                 if (idx !== 0 && post.rings.length === g.rings) { g.inProgress = false; }
@@ -324,6 +352,59 @@
             g.source = idx;
             g.selected = ring;
             ring.select(post.yTop, g.animSpeed);
+        }
+    }
+
+    function autoMove(n, source, target, auxiliary, script) {
+        if (!script) { script = []; }
+        if (0 >= n) { return script; }
+        script = autoMove(n - 1, source, auxiliary, target, script);
+        const ring = source.rings.pop();
+        target.rings.push(ring);
+        script.push({ ring: ring, moves: [
+        // ring.move( [
+            { y: target.yBottom - (ring.height * target.rings.length), s: theGame.animSpeed },
+            { x: target.x, s: theGame.animSpeed },
+            { y: source.yTop - ring.height - 10, s: theGame.animSpeed }
+        // ], function() {
+        //     script = autoMove(n - 1, auxiliary, target, source, script);
+        //     return script;
+        // } );
+        ]});
+
+        script = autoMove(n - 1, auxiliary, target, source, script);
+        return script;
+    }
+
+    function automate(rings, speed) {
+        theGame = new game(+rings, +speed);
+        theGame.init();
+        theGame.inProgress = false;
+        const bwScript = autoMove(theGame.rings,
+            theGame.posts[0],
+            theGame.posts[2],
+            theGame.posts[1]);
+        
+        this.script = bwScript.reverse();
+        // this.script = [];
+        // while (true) {
+        //     const item = bwScript.pop();
+        //     if (!item) { break; }
+        //     this.script.push(item);
+        // }
+
+        this.runScript = function() {
+            const item = this.script.pop();
+            if (!item) { return; }
+            item.ring.move(item.moves, this.runScript.bind(this));
+        }
+
+        this.runScript();
+    }
+
+    function onSpeedChange(speed) {
+        if (!!theGame) {
+            theGame.animSpeed = +speed;
         }
     }
 
