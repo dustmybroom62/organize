@@ -1,0 +1,30 @@
+<html>
+    <script>
+        const getSentenceFragment = (offset, callback) => {
+            const pageSize = 3;
+            const sentence = [...'hello world'];
+            setTimeout( () => callback({
+                data: sentence.slice(offset, offset + pageSize),
+                nextPage: offset +
+                    pageSize < sentence.length ? offset + pageSize : undefined
+            }), 500 );
+        };
+
+        // getSentenceFragment(0, (data) => console.info(data));
+
+        const getSentence = (offset, callback) => {
+            getSentenceFragment(offset, (fragment) => {
+                if (fragment.nextPage) {
+                    // recursively call getSentence
+                    getSentence(fragment.nextPage, (nextFragment) => {
+                        callback(fragment.data.concat(nextFragment));
+                    } );
+                } else {
+                    callback(fragment.data);
+                }
+            } );
+        };
+
+        getSentence(0, (sentence) => console.info(sentence) );
+    </script>
+</html>

@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <script src="https://cdn.polyfill.io/v2/polyfill.min.js"></script>    
+<script>
+    const getSentenceFragment = function (offset) {
+        return new Promise(function (resolve, reject) {
+            const pageSize = 3;
+            const szSentence = 'hello world';
+            const sentence = [];
+            for (let i = 0; i < szSentence.length; i++) { sentence.push(szSentence[i]); }
+            setTimeout(function () {
+                resolve({
+                    data: sentence.slice(offset, offset + pageSize),
+                    nextPage: offset +
+                        pageSize < sentence.length ? offset + pageSize : undefined
+                })
+            }, 500);
+        });
+    };
+
+    // getSentenceFragment(0)
+    //     .then( (fragment) => fragment.data )
+    //     .then( (letters) => console.info(letters) );
+
+    const getSentence = function (offset) {
+        return getSentenceFragment(offset)
+            .then(function (fragment) {
+                if (fragment.nextPage) {
+                    // recursively call getSentence
+                    return getSentence(fragment.nextPage)
+                        .then(
+                            function (nextFragment) { return fragment.data.concat(nextFragment); }
+                        );
+                } else {
+                    return fragment.data;
+                }
+            });
+    };
+
+    getSentence(0).then(function (sentence) { console.info(sentence); });
+</script>
+</head>    
+</html>
