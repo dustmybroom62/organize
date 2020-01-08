@@ -8,6 +8,7 @@
 .game-controls {
             font-size: 24px;
             font-family: Arial, Helvetica, sans-serif;
+            white-space: nowrap;
         }
 
         .start {
@@ -47,7 +48,7 @@
             display: -webkit-box;
             display: -ms-flexbox;
             display: flex;
-            /* width: 600px; */
+            height: 240px;
         }
 
         .svg {
@@ -102,7 +103,7 @@
             <div>
                 <label class="game-controls"> Animation Speed: </label>
                 <input id="txtSpeed" class="game-controls" onchange="onSpeedChange(this.value)" type="number" min="1"
-                    max="10" value="1" />
+                    max="10" value="5" />
             </div>
         </div>
 
@@ -110,11 +111,11 @@
             <svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" class="svg"
                 viewBox="0 0 600 240" preserveAspectRatio="xMidYMid meet">
                 <rect id="svgEditorBackground" x="0" y="0" width="600" height="240" fill="none" stroke="black" />
-                <rect id="post_0" x="-6" y="-10" fill="brown" width="12" height="200" transform="translate(100 50)" />
+                <rect id="post_0" x="-6" y="-10" fill="brown" width="12" height="200" rx="6" ry="6" transform="translate(100 50)" />
                 <rect id="base_0" x="-90" y="-10" fill="brown" width="180" height="10" transform="translate(100 240)" />
-                <rect id="post_1" x="-6" y="-10" fill="brown" width="12" height="200" transform="translate(300 50)" />
+                <rect id="post_1" x="-6" y="-10" fill="brown" width="12" height="200" rx="6" ry="6" transform="translate(300 50)" />
                 <rect id="base_1" x="-90" y="-10" fill="brown" width="180" height="10" transform="translate(300 240)" />
-                <rect id="post_2" x="-6" y="-10" fill="brown" width="12" height="200" transform="translate(500 50)" />
+                <rect id="post_2" x="-6" y="-10" fill="brown" width="12" height="200" rx="6" ry="6" transform="translate(500 50)" />
                 <rect id="base_2" x="-90" y="-10" fill="brown" width="180" height="10" transform="translate(500 240)" />
                 <g id="g_ring_0" class="visible" transform="translate(100 50)">
                     <rect id="ring_0" x="-24" y="0" fill="red" width="48" height="20" rx="10" ry="10" />
