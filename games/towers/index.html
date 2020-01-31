@@ -4,6 +4,9 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <style>
 /* prefixed by https://autoprefixer.github.io (PostCSS: v7.0.23, autoprefixer: v9.7.3) */
+body {
+    font-family: Arial, Helvetica, sans-serif;
+}
 
 .game-controls {
             font-size: 24px;
@@ -96,7 +99,7 @@
                     New Game
                 </button class="game-controls">
                 <button class="game-controls"
-                    onclick="automate(document.all.txtRings.value, document.all.txtSpeed.value)">
+                    onclick="automate(this, document.all.txtRings.value, document.all.txtSpeed.value)">
                     Auto Play
                 </button>
             </div>
@@ -142,31 +145,31 @@
                     </text>
                 </g>
                 <g id="g_ring_4" class="visible" transform="translate(100 130)">
-                    <rect id="ring_4" x="-56" y="0" fill="red" width="112" height="20" rx="10" ry="10" />
+                    <rect id="ring_4" x="-56" y="0" fill="purple" width="112" height="20" rx="10" ry="10" />
                     <text class="disc-label">
                         <tspan y="15" text-anchor="middle">5</tspan>
                     </text>
                 </g>
                 <g id="g_ring_5" class="visible" transform="translate(100 150)">
-                    <rect id="ring_5" x="-64" y="0" fill="green" width="128" height="20" rx="10" ry="10" />
+                    <rect id="ring_5" x="-64" y="0" fill="red" width="128" height="20" rx="10" ry="10" />
                     <text class="disc-label">
                         <tspan y="15" text-anchor="middle">6</tspan>
                     </text>
                 </g>
                 <g id="g_ring_6" class="visible" transform="translate(100 170)">
-                    <rect id="ring_6" x="-72" y="0" fill="blue" width="144" height="20" rx="10" ry="10" />
+                    <rect id="ring_6" x="-72" y="0" fill="green" width="144" height="20" rx="10" ry="10" />
                     <text class="disc-label">
                         <tspan y="15" text-anchor="middle">7</tspan>
                     </text>
                 </g>
                 <g id="g_ring_7" class="visible" transform="translate(100 190)">
-                    <rect id="ring_7" x="-80" y="0" fill="orange" width="160" height="20" rx="10" ry="10" />
+                    <rect id="ring_7" x="-80" y="0" fill="blue" width="160" height="20" rx="10" ry="10" />
                     <text class="disc-label">
                         <tspan y="15" text-anchor="middle">8</tspan>
                     </text>
                 </g>
                 <g id="g_ring_8" class="visible" transform="translate(100 210)">
-                    <rect id="ring_8" x="-88" y="0" fill="purple" width="176" height="20" rx="10" ry="10" />
+                    <rect id="ring_8" x="-88" y="0" fill="orange" width="176" height="20" rx="10" ry="10" />
                     <text class="disc-label">
                         <tspan y="15" text-anchor="middle">9</tspan>
                     </text>
@@ -177,6 +180,11 @@
                     fill="transparent" onclick="onHotClick(1)" />
                 <rect id="hotspot_2" width="180" height="100%" x="-90" y="0" transform="translate(450 0)"
                     fill="transparent" onclick="onHotClick(2)" />
+                <text transform="translate(0, 14)" font-family="inherit" font-size="16" font-style="bold" >
+                    <tspan text-anchor="middle" x="100">Start</tspan>
+                    <!-- <tspan text-anchor="middle" x="300">Temp</tspan> -->
+                    <tspan text-anchor="middle" x="500">Finish</tspan>
+                </text>
             </svg>
         </div>
         <div class="controls-container">
@@ -208,6 +216,7 @@
         this.animSpeed = 1;
         this.isAnimating = false;
         this.path = {};
+        this.cancelationToken = { cancel: false };
 
         this.element = document.querySelector('#g_ring_' + value);
         if (!!this.element) {
@@ -218,16 +227,21 @@
             if (this.isAnimating) { return true; }
         }
 
-        this.move = function (destPath, callback) {
+        this.move = function (destPath, callback, cancelationToken) {
             if (this.isAnimating) { return false; }
             // this.dest = dest;
             // this.animSpeed = speed;
             this.path = destPath;
             this.callback = callback;
+            if (!!cancelationToken) { this.cancelationToken = cancelationToken; }
             this.animate();
         };
 
         this.animate = function () {
+            if (this.cancelationToken.cancel) {
+                if (this.callback) { this.callback(); }
+                return;
+            }
             const dest = this.path.pop();
             if (!dest) {
                 this.isAnimating = false;
@@ -294,6 +308,19 @@
         this.moveCount = 0;
         this.moveMin = Math.pow(2, this.rings) - 1;
         this.script = [];
+        this.isAutomating = false;
+        this.btnElement = null;
+        this.cancelAuto = false;
+        this.cancelationToken = { cancel: false };
+        this.history = [];
+
+        this.cancelAutomation = function() {
+            this.cancelAuto = true;
+            this.cancelationToken.cancel = true;
+            if (this.btnElement) { this.btnElement.disabled = false; }
+            this.isAutomating = false;
+            return false;
+        };
 
         this.init = function () {
             showMoves(this.moveCount, this.moveMin);
@@ -338,16 +365,21 @@
         };
 
         this.runScript = function() {
+            if (this.cancelAuto) { return this.cancelAutomation(); }
             const item = this.script.pop();
-            if (!item) { return; }
+            if (!item) { return this.cancelAutomation; }
             const self = this;
             item.ring.move(item.moves, function() {
+                if (this.cancelAuto) { return this.cancelAutomation(); }
                 showMoves(++self.moveCount, self.moveMin);
                 self.runScript();
-            });
+            }, this.cancelationToken);
         };
 
-        this.automate = function() {
+        this.automate = function(btn) {
+            this.btnElement = btn;
+            if (this.isAutomating) { return; }
+            this.isAutomating = true;
             this.inProgress = false;
             const bwScript = this.autoMove(this.rings,
                 this.posts[0],
@@ -397,6 +429,8 @@
                 if (!!temp) { post.rings.push(temp); }
                 post.rings.push(g.selected);
                 if (g.source !== g.dest) {
+                    g.history.push({source: g.source, dest: g.dest});
+                    console.info(g.history);
                     g.moveCount++;
                 }
                 g.selected.move(
@@ -424,10 +458,12 @@
         }
     }
 
-    function automate(rings, speed) {
+    function automate(btn, rings, speed) {
+        if (!!theGame && theGame.isAutomating) { return; }
+        btn.disabled = true;
         theGame = new game(+rings, +speed);
         theGame.init();
-        theGame.automate();
+        theGame.automate(btn);
     }
 
     function onSpeedChange(speed) {
@@ -437,8 +473,10 @@
     }
 
     function onNewGame(rings, speed) {
+        if (!!theGame) { theGame.cancelAutomation(); }
         theGame = new game(+rings, +speed);
-        theGame.init();
+        requestAnimationFrame(function() { theGame.init(); });
+        // theGame.init();
     }
 
 </script>
