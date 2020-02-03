@@ -214,7 +214,6 @@
         this.tx = tx;
         this.ty = ty;
         this.visible = visible;
-        // this.dest = { x: -1, y: -1 };
         this.animSpeed = 1;
         this.isAnimating = false;
         this.path = {};
@@ -229,10 +228,12 @@
             if (this.isAnimating) { return true; }
         }
 
+        this.transform = function () {
+            this.element.setAttribute('transform', 'translate(' + this.tx + ',' + this.ty + ')');
+        };
+
         this.move = function (destPath, callback, cancelationToken) {
             if (this.isAnimating) { return false; }
-            // this.dest = dest;
-            // this.animSpeed = speed;
             this.path = destPath;
             this.callback = callback;
             if (!!cancelationToken) { this.cancelationToken = cancelationToken; }
@@ -282,14 +283,9 @@
             requestAnimationFrame(this.animate.bind(this));
         };
 
-        this.transform = function () {
-            this.element.attributes['transform'].value = 'translate(' + this.tx + ',' + this.ty + ')';
-        };
-        this.transform();
-
         this.select = function (ty, speed) {
             if (this.isAnimating) { return false; }
-            this.move([{ y: ty - this.height - 10, s: 2 * speed }]);
+            this.move([{ y: ty - this.height - 4, s: 2 * speed }]);
         };
     }
     function post(x, yTop, yBottom) {
@@ -364,7 +360,7 @@
                 ring: ring, moves: [
                     { y: target.yBottom - (ring.height * target.rings.length), s: this.animSpeed },
                     { x: target.x, s: this.animSpeed },
-                    { y: source.yTop - ring.height - 10, s: this.animSpeed }
+                    { y: source.yTop - ring.height - 4, s: this.animSpeed }
                 ]
             });
 
@@ -399,7 +395,7 @@
             this.runScript();
         };
 
-        this.onHotClick = function(idx) {
+        this.onPostSelect = function(idx) {
             if (!this.inProgress) { return; }
             if (!!this.selected) {
                 if (this.selected.isAnimating) { return; }
@@ -469,7 +465,7 @@
     function onHotClick(idx) {
         const g = theGame;
         if (!g) { return; }
-        g.onHotClick(idx);
+        g.onPostSelect(idx);
     }
 
     function automate(btn, rings, speed) {
