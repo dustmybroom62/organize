@@ -105,7 +105,7 @@
             <div>
                 <label class="game-controls"> Animation Speed: </label>
                 <input id="txtSpeed" class="game-controls" onchange="onSpeedChange(this.value)" type="number" min="1"
-                    max="10" value="5" />
+                    max="50" value="5" />
             </div>
         </div>
 
@@ -468,35 +468,62 @@
         g.onPostSelect(idx);
     }
 
+    function validateRings(rings) {
+        const ringsMin = 3;
+        const ringsMax = 9;
+
+        const numRings = +rings;
+        if (isNaN(numRings) || ringsMin > numRings || ringsMax < numRings) {
+            console.error('Rings must be a number between ' + ringsMin + ' and ' + ringsMax);
+            return false;
+        }
+        return true;
+    }
+
+    function validateSpeed(speed) {
+        const speedMin = 1;
+        const speedMax = 50;
+        const _speed = +speed;
+        if (isNaN(_speed) || speedMin > _speed || speedMax < _speed) {
+            console.error('Speed must be a number between ' + speedMin + ' and ' + speedMax);
+            return false;
+        }
+        return true;
+    }
+
     function automate(btn, rings, speed) {
         if (!!theGame && theGame.isAutomating) { return; }
+        if (!validateInput(rings, speed)) { return; }
+        theGame = new game(rings, speed, showMoves);
+        if (!theGame) { return; }
         btn.disabled = true;
-        theGame = new game(+rings, +speed);
         theGame.init();
         theGame.automate(function() {
             btn.disabled = false;
         });
     }
 
+    function validateInput(rings, speed) {
+        let result = true;
+        result &= validateRings(rings);
+        result &= validateSpeed(speed);
+        return result;
+    }
+
     function onSpeedChange(speed) {
+        if (!validateSpeed(speed)) { return; }
         if (!!theGame) {
             theGame.animSpeed = +speed;
         }
     }
 
     function onNewGame(rings, speed) {
-        const ringsMin = 3;
-        const ringsMax = 9;
-        const numRings = +rings;
-        if (isNaN(numRings) || ringsMin > numRings || ringsMax < numRings) {
-            console.error('Rings must be a number between ' + ringsMin + ' and ' + ringsMax);
-            return null;
-        }
+        if (!validateInput(rings, speed)) { return; }
 
         if (!!theGame) { theGame.cancelAutomation(); }
-        theGame = new game(numRings, +speed, showMoves);
+        theGame = new game(+rings, +speed, showMoves);
         requestAnimationFrame(function () { theGame.init(); });
-        // theGame.init();
+        return theGame;
     }
 
 </script>
