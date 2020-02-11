@@ -487,7 +487,7 @@
             target.rings.push(ring);
             const script = this.scriptMove(ring, source, target);
             this.history.push(move);
-            this.inProgress = true;
+            this.inProgress = !(move.dest !== 0 && target.rings.length === this.rings);
             ring.move(script);
             this.scoreChanged(++this.moveCount, this.moveMin);
         };
