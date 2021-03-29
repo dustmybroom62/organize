@@ -102,7 +102,16 @@
         <div class="controls-container">
             <div class="controls-container values-1">
                 <label class="game-controls">Rings: </label class="game-controls">
-                <input id="txtRings" class="game-controls" type="number" min="3" max="9" value="9" />
+                <select id="txtRings" class="game-controls" >
+                    <option value="9" selected="selected">9</option>
+                    <option value="8">8</option>
+                    <option value="7">7</option>
+                    <option value="6">6</option>
+                    <option value="5">5</option>
+                    <option value="4">4</option>
+                    <option value="3">3</option>
+                </select>
+                 <!-- type="number" min="3" max="9" value="9" /> -->
             </div>
             <div>
                 <div class="controls-container btn-row-1">
@@ -122,8 +131,15 @@
             </div>
             <div class="controls-container values-2">
                 <label class="game-controls"> Animation Speed: </label>
-                <input id="txtSpeed" class="game-controls" onchange="onSpeedChange(this.value)" type="number" min="1"
-                    max="50" value="5" />
+                <select id="txtSpeed" class="game-controls" onchange="onSpeedChange(this.value)">
+                    <option value="5">5</option>
+                    <option value="10">10</option>
+                    <option value="20">20</option>
+                    <option value="30">30</option>
+                    <option value="40">40</option>
+                    <option value="50">50</option>
+                </select>
+                 <!-- type="number" min="1" max="50" value="5" /> -->
             </div>
         </div>
 
